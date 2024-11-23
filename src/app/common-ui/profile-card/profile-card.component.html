@@ -1,19 +1,19 @@
+@let user = profile();
 <div class="profile-card">
   <div class="avatar-name">
-    <img src="/assets/images/Img.png" alt="avatar" class="profile-card__avatar"/>
+    <img [src]="user.avatarUrl | ttImageUrl" [alt]="user.description" class="profile-card__avatar"/>
     <div class="profile-card__name">
-      <strong>Райан Гослинг</strong>
-      <span class="subtitle">ryan.gosling</span>
+      <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+      <span class="subtitle">{{ user.username }}</span>
     </div>
   </div>
   <div class="profile-card__description">
-    Список навыков, который мы обсудили выше, — основа резюме, но не единственная его часть. Также можно рассказать о себе в классическом смысле — этот раздел можно добавить в сопроводительное письмо.
+    {{ user.description }}
   </div>
   <ul class="profile-card__tags">
-    <li class="skill-tag">Angular</li>
-    <li class="skill-tag">HTML</li>
-    <li class="skill-tag">CSS</li>
-    <li class="skill-tag">JavaScript</li>
+    @for(stack of user.stack; track stack) {
+      <li class="skill-tag">{{ stack }}</li>
+    }
   </ul>
   <div class="profile-card__actions">
     <button class="btn">

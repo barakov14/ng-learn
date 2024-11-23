@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import {Profile} from '../../data/interfaces/profile.interface';
+import {ImageUrlPipe} from '../../helpers/pipes/image-url.pipe';
 
 @Component({
   selector: 'tt-profile-card',
-  standalone: true,
-  imports: [],
   templateUrl: './profile-card.component.html',
   styleUrl: './profile-card.component.scss',
+  imports: [
+    ImageUrlPipe
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileCardComponent {
-
+  profile = input.required<Profile>()
 }

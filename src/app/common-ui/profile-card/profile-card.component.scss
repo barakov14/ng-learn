@@ -2,7 +2,7 @@
   border: 1px solid var(--light-color);
   padding: 32px 24px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr) 250px 1fr;
 }
 
 .avatar-name {
@@ -18,8 +18,24 @@
   overflow: hidden;
 }
 
+.profile-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0;
+}
+
 .profile-card__name {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.profile-card__description {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 }
