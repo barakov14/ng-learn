@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  height: 100dvh; /* Занимает всю высоту экрана */
+}
+
+tt-siderbar {
+  flex: 0 0 300px; /* Фиксированная ширина сайдбара */
+}
+
+.main {
+  flex: 1;
+}

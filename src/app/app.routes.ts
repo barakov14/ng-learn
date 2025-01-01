@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {accessGuard} from './auth/access.guard';
+import {accessGuard} from './core/guards/access.guard';
 
 export const routes: Routes = [
   {
@@ -9,19 +9,24 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./common-ui/layout/layout.component')
+    loadComponent: () => import('./core/layout/layout.component')
       .then(c => c.LayoutComponent),
     children: [
       {
         path: '',
-        loadComponent: () => import('./pages/search-page/search-page.component')
-          .then(c => c.SearchPageComponent)
+        loadComponent: () => import('./features/profile/pages/profiles-search/profiles-search.component')
+          .then(c => c.ProfilesSearchComponent)
       },
       {
-        path: 'profile',
-        loadComponent: () => import('./pages/profile-page/profile-page.component')
-          .then(c => c.ProfilePageComponent)
+        path: 'profile/:id',
+        loadComponent: () => import('./features/profile/pages/profile/profile.component')
+          .then(c => c.ProfileComponent)
       },
+      {
+        path: 'settings',
+        loadComponent: () => import('./features/profile/pages/profile-settings/settings-page.component')
+          .then(c => c.SettingsPageComponent)
+      }
     ],
     canActivate: [accessGuard]
   }

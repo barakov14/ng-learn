@@ -1,0 +1,60 @@
+<img
+  src="/assets/images/logo.svg"
+  alt="logo"
+  class="logo mb16"
+/>
+
+<nav class="nav">
+  <ul class="main-menu-list mb16">
+    <li>
+      <button class="menu-item" routerLink="/profile/me" routerLinkActive="menu-item-active">
+        <svg-icon src="/assets/icons/home.svg" svgClass="svg-icon"/>
+        <span>Моя страница</span>
+      </button>
+    </li>
+    <li>
+      <button class="menu-item" routerLink="/chat" routerLinkActive="menu-item-active">
+        <svg-icon src="/assets/icons/chat.svg" svgClass="svg-icon"/>
+        <span>Чаты</span>
+      </button>
+    </li>
+    <li>
+      <button class="menu-item" routerLink="/search" routerLinkActive="menu-item-active">
+        <svg-icon src="/assets/icons/search.svg" svgClass="svg-icon"/>
+        <span>Поиск</span>
+      </button>
+    </li>
+  </ul>
+
+  <div class="subscribers-list">
+    <h4 class="subscribers-list__title mb16">Подписчики</h4>
+    <ul class="subscribers-menu-list mb16">
+      @for(profile of (subscribers$())?.slice(0, 3); track profile.id) {
+        <li>
+          <button class="menu-item" [routerLink]="['/profile', profile.id]" routerLinkActive="menu-item-active">
+            <img [src]="profile.avatarUrl | ttImageUrl" alt class="user-avatar"/> <span>{{ profile.firstName }} {{ profile.lastName }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+    <button class="subscribers-list__btn">
+      <span>Все подписчики</span>
+      <img src="/assets/icons/right-vector.svg" alt="right-vector">
+    </button>
+  </div>
+
+  <div class="user-profile">
+    @if(me$(); as me) {
+      <a class="avatar-username" routerLink="/profile/me" routerLinkActive="link-active">
+        @if(me.avatarUrl) {
+          <img [src]="me.avatarUrl | ttImageUrl" alt="user-avatar">
+        } @else {
+          <div style="border-radius: 50%; width: 32px; height: 32px; background: #ccc;"></div>
+        }
+        <span>{{ me.username }}</span>
+      </a>
+      <svg-icon src="/assets/icons/settings.svg" class="icon-button"/>
+    }
+  </div>
+</nav>
+
