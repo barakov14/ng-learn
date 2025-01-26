@@ -1,29 +1,21 @@
-<img
-  src="/assets/images/logo.svg"
-  alt="logo"
-  class="logo mb16"
-/>
+<a routerLink="/" class="logo mb16">
+  <img
+    src="/assets/images/logo.svg"
+    alt="logo"
+    style="width: inherit; height: inherit"
+  />
+</a>
 
 <nav class="nav">
   <ul class="main-menu-list mb16">
-    <li>
-      <button class="menu-item" routerLink="/profile/me" routerLinkActive="menu-item-active">
-        <svg-icon src="/assets/icons/home.svg" svgClass="svg-icon"/>
-        <span>Моя страница</span>
-      </button>
-    </li>
-    <li>
-      <button class="menu-item" routerLink="/chat" routerLinkActive="menu-item-active">
-        <svg-icon src="/assets/icons/chat.svg" svgClass="svg-icon"/>
-        <span>Чаты</span>
-      </button>
-    </li>
-    <li>
-      <button class="menu-item" routerLink="/search" routerLinkActive="menu-item-active">
-        <svg-icon src="/assets/icons/search.svg" svgClass="svg-icon"/>
-        <span>Поиск</span>
-      </button>
-    </li>
+    @for(item of menuItems; track item.label) {
+      <li>
+        <button class="menu-item" [routerLink]="[item.link]" routerLinkActive="menu-item-active" [routerLinkActiveOptions]="{exact: true}">
+          <fast-svg [name]="item.icon"/>
+          <span>{{ item.label }}</span>
+        </button>
+      </li>
+    }
   </ul>
 
   <div class="subscribers-list">
@@ -47,13 +39,13 @@
     @if(me$(); as me) {
       <a class="avatar-username" routerLink="/profile/me" routerLinkActive="link-active">
         @if(me.avatarUrl) {
-          <img [src]="me.avatarUrl | ttImageUrl" alt="user-avatar">
-        } @else {
-          <div style="border-radius: 50%; width: 32px; height: 32px; background: #ccc;"></div>
+          <img [src]="me.avatarUrl | ttImageUrl" alt="user-avatar" class="avatar"/>
         }
         <span>{{ me.username }}</span>
       </a>
-      <svg-icon src="/assets/icons/settings.svg" class="icon-button"/>
+      <button class="icon-button">
+        <fast-svg name="settings"/>
+      </button>
     }
   </div>
 </nav>

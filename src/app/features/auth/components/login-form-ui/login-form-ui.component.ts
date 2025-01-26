@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, input, output} from '@angular/core';
 import {
   FormsModule,
   NonNullableFormBuilder,
@@ -19,6 +19,7 @@ import {LoginRequest} from '../../models/auth';
 })
 export class LoginFormUiComponent {
   private readonly fb = inject(NonNullableFormBuilder)
+  readonly isLoading = input.required<boolean>()
 
   login = output<LoginRequest>()
 

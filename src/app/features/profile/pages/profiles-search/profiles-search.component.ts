@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, injec
 import {ProfileService} from '../../services/profile.service';
 import {Profile} from '../../../../shared/models/profile.interface';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ProfileCardComponent} from '../../../../shared/common-ui/profile-card/profile-card.component';
+import {ProfileCardComponent} from '../../components/profile-card/profile-card.component';
 
 @Component({
   selector: 'tt-profiles-search',

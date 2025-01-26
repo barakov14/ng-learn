@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {LoginRequest} from '../../models/auth';
-import {firstValueFrom} from 'rxjs';
+import {lastValueFrom} from 'rxjs';
 import {LoginFormUiComponent} from '../../components/login-form-ui/login-form-ui.component';
 import {AuthService} from '../../services/auth.service';
 
@@ -16,7 +16,13 @@ import {AuthService} from '../../services/auth.service';
 export class LoginComponent {
   private readonly authService = inject(AuthService)
 
-  onLogin(data: LoginRequest) {
-    firstValueFrom(this.authService.login(data))
+  protected readonly isLoading = signal<boolean>(false)
+
+  async onLogin(data: LoginRequest) {
+    this.isLoading.set(true)
+
+    await lastValueFrom(this.authService.login(data))
+
+    this.isLoading.set(false)
   }
 }

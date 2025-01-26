@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, input} from '@angular/core';
-import {Profile} from '../../models/profile.interface';
-import {ImageUrlPipe} from '../../pipes/image-url.pipe';
+import {Profile} from '../../../../shared/models/profile.interface';
+import {ImageUrlPipe} from '../../../../shared/pipes/image-url.pipe';
 
 @Component({
   selector: 'tt-profile-card',

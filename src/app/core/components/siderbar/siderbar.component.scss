@@ -11,6 +11,7 @@
 .logo {
   width: 61px;
   height: 74px;
+  cursor: pointer;
 }
 
 .nav {
@@ -92,4 +93,21 @@
 
 .icon-button {
   cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--primary-color);
+
+  &:hover {
+    opacity: 0.8;
+    transition: 0.2s ease-in;
+  }
+}
+
+
+.avatar {
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  border-radius: 50%;
 }

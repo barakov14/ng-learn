@@ -1,6 +1,6 @@
 import { HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
+import { AuthService } from '../../features/auth/services/auth.service';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs';
 
@@ -25,7 +25,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 const handle403Error = (
   authService: AuthService,
-  req: HttpRequest<any>,
+  req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ) => {
   if (!isRefreshing) {
@@ -53,7 +53,7 @@ const handle403Error = (
   }
 };
 
-const addToken = (req: HttpRequest<any>, token: string) => {
+const addToken = (req: HttpRequest<unknown>, token: string) => {
   return req.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`

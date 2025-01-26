@@ -13,6 +13,7 @@ export class AuthService {
   private readonly cookieService = inject(CookieService)
   private readonly router = inject(Router);
 
+
   private baseUrl = 'https://icherniakov.ru/yt-course';
 
 
@@ -28,10 +29,15 @@ export class AuthService {
   }
 
 
-  login(payload: LoginRequest) {
+  login(requestBody: LoginRequest) {
+    const payload = new FormData();
+    payload.set('username', requestBody.username);
+    payload.set('password', requestBody.password);
+
     return this.http.post<TokenResponse>(`${this.baseUrl}/auth/token`, payload).pipe(
       tap((val) => {
         this.setToken(val)
+        this.router.navigate(['/']);
       })
     )
   }

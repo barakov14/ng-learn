@@ -3,17 +3,17 @@ import {ProfileService} from '../../services/profile.service';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {map, switchMap} from 'rxjs';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {ProfileHeaderComponent} from '../../../../shared/common-ui/profile-header/profile-header.component';
-import {SvgIconComponent} from 'angular-svg-icon';
+import {ProfileHeaderComponent} from '../../components/profile-header/profile-header.component';
 import {ImageUrlPipe} from '../../../../shared/pipes/image-url.pipe';
+import {FastSvgComponent} from '@push-based/ngx-fast-svg';
 
 @Component({
   selector: 'tt-profile',
   imports: [
     ProfileHeaderComponent,
-    SvgIconComponent,
     RouterLink,
-    ImageUrlPipe
+    ImageUrlPipe,
+    FastSvgComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

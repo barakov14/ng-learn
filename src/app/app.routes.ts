@@ -4,8 +4,8 @@ import {accessGuard} from './core/guards/access.guard';
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('./pages/login-page/login-page.component')
-      .then(c => c.LoginPageComponent),
+    loadComponent: () => import('./features/auth/pages/login/login.component')
+      .then(c => c.LoginComponent),
   },
   {
     path: '',

@@ -4,13 +4,15 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './core/interceptors/auth.interceptor';
-import {provideAngularSvgIcon} from 'angular-svg-icon';
+import {provideFastSVG} from '@push-based/ngx-fast-svg';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideAngularSvgIcon()
+    provideFastSVG({
+      url: (name) => `/assets/icons/${name}.svg`
+    })
   ]
 };

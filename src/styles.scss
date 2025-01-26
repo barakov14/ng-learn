@@ -1,5 +1,5 @@
-@import "fonts";
-@import "margins";
+@use "fonts";
+@use "margins";
 /* You can add global styles to this file, and also import other style files */
 :root {
   --dark-color: #000;
@@ -113,7 +113,7 @@ ul {
 
   border: 1px solid var(--dark-color);
 
-  svg-icon {
+  svg {
     position: relative;
     top: 0.1rem;
   }
@@ -173,7 +173,7 @@ ul {
     background: var(--dark-hover-color);
     color: var(--primary-color);
 
-    .menu-item svg-icon {
+    .menu-item svg {
       color: var(--primary-color)
     }
   }

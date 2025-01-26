@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, DestroyRef, effect, inject, OnInit} from '@angular/core';
-import {ProfileHeaderComponent} from '../../../../shared/common-ui/profile-header/profile-header.component';
+import {ProfileHeaderComponent} from '../../components/profile-header/profile-header.component';
 import {ProfileService} from '../../services/profile.service';
 import {firstValueFrom} from 'rxjs';
 import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
