@@ -6,6 +6,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {ProfileHeaderComponent} from '../../components/profile-header/profile-header.component';
 import {ImageUrlPipe} from '../../../../shared/pipes/image-url.pipe';
 import {FastSvgComponent} from '@push-based/ngx-fast-svg';
+import {PostInputComponent} from '../../components/posts/post-input/post-input.component';
 
 @Component({
   selector: 'tt-profile',
@@ -13,7 +14,8 @@ import {FastSvgComponent} from '@push-based/ngx-fast-svg';
     ProfileHeaderComponent,
     RouterLink,
     ImageUrlPipe,
-    FastSvgComponent
+    FastSvgComponent,
+    PostInputComponent
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

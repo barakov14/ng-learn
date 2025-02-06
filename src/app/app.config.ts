@@ -5,10 +5,11 @@ import { routes } from './app.routes';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './core/interceptors/auth.interceptor';
 import {provideFastSVG} from '@push-based/ngx-fast-svg';
+import {httpUrlInterceptor} from './core/interceptors/http-url.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor, httpUrlInterceptor])),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideFastSVG({

@@ -8,16 +8,15 @@ import {NonNullableFormBuilder, ReactiveFormsModule, Validators} from '@angular/
   selector: 'tt-profile-settings',
   imports: [
     ProfileHeaderComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  templateUrl: './settings-page.component.html',
-  styleUrl: './settings-page.component.scss',
+  templateUrl: './profile-settings.component.html',
+  styleUrl: './profile-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SettingsPageComponent {
+export class ProfileSettingsComponent {
   private readonly profileService = inject(ProfileService)
   private readonly fb = inject(NonNullableFormBuilder)
-  private readonly destroyRef = inject(DestroyRef)
 
 
 

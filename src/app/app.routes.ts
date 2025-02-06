@@ -24,8 +24,8 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        loadComponent: () => import('./features/profile/pages/profile-settings/settings-page.component')
-          .then(c => c.SettingsPageComponent)
+        loadComponent: () => import('./features/profile/pages/profile-settings/profile-settings.component')
+          .then(c => c.ProfileSettingsComponent)
       }
     ],
     canActivate: [accessGuard]
