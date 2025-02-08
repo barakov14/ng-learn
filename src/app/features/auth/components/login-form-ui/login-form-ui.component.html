@@ -2,17 +2,8 @@
   <h1 class="mb32">Вход</h1>
   <label class="tt-control-label mb16">
     Telegram username
-    <input
-      type="text"
-      placeholder="Введите логин"
-      class="tt-input"
-      formControlName="username"
-    />
-    <img
-      src="/assets/icons/telegram.svg"
-      class="tt-control-icon"
-      alt
-    />
+    <input type="text" placeholder="Введите логин" class="tt-input" formControlName="username" />
+    <img src="/assets/icons/telegram.svg" class="tt-control-icon" alt />
   </label>
   <label class="tt-control-label mb32">
     Пароль
@@ -28,7 +19,7 @@
       class="tt-control-icon"
       style="cursor: pointer"
       alt
-    >
+    />
   </label>
   <button class="btn btn-shadow" [disabled]="isLoading()">Войти</button>
 </form>

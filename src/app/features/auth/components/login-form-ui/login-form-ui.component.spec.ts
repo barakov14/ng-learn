@@ -8,9 +8,8 @@ describe('LoginFormUiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginFormUiComponent]
-    })
-    .compileComponents();
+      imports: [LoginFormUiComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoginFormUiComponent);
     component = fixture.componentInstance;

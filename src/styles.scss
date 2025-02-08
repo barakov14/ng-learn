@@ -1,13 +1,13 @@
-@use "fonts";
-@use "margins";
+@use 'fonts';
+@use 'margins';
 /* You can add global styles to this file, and also import other style files */
 :root {
   --dark-color: #000;
   --light-color: #fff;
-  --primary-color: #AE7AFF;
-  --gray-color: #5F646D;
+  --primary-color: #ae7aff;
+  --gray-color: #5f646d;
   --dark-hover-color: #161616;
-  --light-transparent-color: rgb(255, 255, 255, 0.75)
+  --light-transparent-color: rgb(255, 255, 255, 0.75);
 }
 
 *,
@@ -22,7 +22,7 @@ body {
   background-color: var(--dark-color);
   color: var(--light-color);
   font-family: 'JetBrains Mono', sans-serif;
-  background-image: url("/assets/images/background-pc.svg");
+  background-image: url('/assets/images/background-pc.svg');
   background-repeat: no-repeat;
 }
 
@@ -111,8 +111,6 @@ ul {
   font-weight: 700;
   line-height: 1.5rem;
 
-
-
   svg {
     position: relative;
     top: 0.1rem;
@@ -142,7 +140,7 @@ ul {
 .btn-shadow {
   position: relative;
   &:before {
-    content: "";
+    content: '';
     position: absolute;
     z-index: -1;
     bottom: -0.25rem;
@@ -190,7 +188,7 @@ ul {
     color: var(--primary-color);
 
     .menu-item svg {
-      color: var(--primary-color)
+      color: var(--primary-color);
     }
   }
 }

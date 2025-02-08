@@ -1,40 +1,49 @@
-import {inject, Injectable} from '@angular/core';
-import {Profile} from '../../../shared/models/profile.interface';
-import {map} from 'rxjs';
-import {Pageble} from '../../../shared/models/pageble.interface';
-import {HttpClient} from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Profile } from '../../../shared/models/profile.interface';
+import { map } from 'rxjs';
+import { Pageble } from '../../../shared/models/pageble.interface';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileDataService {
+  private readonly http = inject(HttpClient);
 
-  private baseUrl = 'https://icherniakov.ru/yt-course';
+  getAccounts(
+    filters: Partial<{
+      firstName: string | null;
+      lastName: string | null;
+      stack: string | null;
+    }>,
+  ) {
+    let params = new HttpParams();
 
-  private readonly http = inject(HttpClient)
+    Object.keys(filters).forEach((key) => {
+      const value = filters[key as keyof typeof filters];
+      if (value !== null && value !== undefined) {
+        params = params.set(key, value);
+      }
+    });
 
-
-  getTestAccounts() {
-    return this.http.get<Profile[]>(`${this.baseUrl}/account/test_accounts`);
+    return this.http.get<Pageble<Profile>>('/account/accounts', { params });
   }
 
   getMe() {
-    return this.http.get<Profile>(`${this.baseUrl}/account/me`)
+    return this.http.get<Profile>('/account/me');
   }
 
   getSubscribersShortList(subsAmount: number) {
-    return this.http.get<Pageble<Profile>>(`${this.baseUrl}/account/subscribers/`)
-      .pipe(
-        map((res) => res.items.slice(0, subsAmount))
-      );
+    return this.http
+      .get<Pageble<Profile>>('/account/subscribers/')
+      .pipe(map((res) => res.items.slice(0, subsAmount)));
   }
 
   getAccount(id: string) {
-    return this.http.get<Profile>(`${this.baseUrl}/account/${id}`);
+    return this.http.get<Profile>(`/account/${id}`);
   }
 
-
   patchProfile(profile: Partial<Profile>) {
-    return this.http.patch(`${this.baseUrl}/account/me`, profile)
+    return this.http.patch('/account/me', profile);
   }
 }

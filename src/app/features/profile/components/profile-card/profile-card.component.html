@@ -1,7 +1,7 @@
 @let user = profile();
 <div class="profile-card">
   <div class="avatar-name">
-    <img [src]="user.avatarUrl | ttImageUrl" [alt]="user.description" class="profile-card__avatar"/>
+    <tt-avatar-circle [avatarUrl]="user.avatarUrl" class="size70" />
     <div class="profile-card__name">
       <strong>{{ user.firstName }} {{ user.lastName }}</strong>
       <span class="subtitle">{{ user.username }}</span>
@@ -11,13 +11,13 @@
     {{ user.description }}
   </div>
   <ul class="profile-card__tags">
-    @for(stack of user.stack; track stack) {
+    @for (stack of user.stack; track stack) {
       <li class="skill-tag">{{ stack }}</li>
     }
   </ul>
   <div class="profile-card__actions">
     <button class="btn">
-      <span>Подписаться</span> <img src="/assets/icons/friend-add.svg" alt="" class="icon">
+      <span>Подписаться</span> <img src="/assets/icons/friend-add.svg" alt="" class="icon" />
     </button>
   </div>
 </div>

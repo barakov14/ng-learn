@@ -14,19 +14,19 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   if (!token) return next(req);
 
   return next(addToken(req, token)).pipe(
-    catchError(err => {
+    catchError((err) => {
       if (err.status === 403) {
         return handle403Error(authService, req, next);
       }
       return throwError(() => err);
-    })
+    }),
   );
 };
 
 const handle403Error = (
   authService: AuthService,
   req: HttpRequest<unknown>,
-  next: HttpHandlerFn
+  next: HttpHandlerFn,
 ) => {
   if (!isRefreshing) {
     isRefreshing = true;
@@ -41,14 +41,14 @@ const handle403Error = (
         authService.logout(); // Выход из системы при ошибке
         return throwError(() => err);
       }),
-      finalize(() => (isRefreshing = false)) // Сбрасываем флаг независимо от результата
+      finalize(() => (isRefreshing = false)), // Сбрасываем флаг независимо от результата
     );
   } else {
     // Ждём, пока текущий процесс обновления токена завершится
     return refreshTokenSubject.pipe(
-      filter(token => token !== null),
+      filter((token) => token !== null),
       take(1),
-      switchMap((newToken) => next(addToken(req, newToken!)))
+      switchMap((newToken) => next(addToken(req, newToken!))),
     );
   }
 };
@@ -56,7 +56,7 @@ const handle403Error = (
 const addToken = (req: HttpRequest<unknown>, token: string) => {
   return req.clone({
     setHeaders: {
-      Authorization: `Bearer ${token}`
-    }
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
