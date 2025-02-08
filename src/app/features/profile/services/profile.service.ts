@@ -39,4 +39,8 @@ export class ProfileService {
   patchProfile(data: Partial<Profile>) {
     return this.profileDataService.patchProfile(data);
   }
+
+  uploadAvatar(imageUrl: File) {
+    return this.profileDataService.uploadAvatar(imageUrl);
+  }
 }

@@ -1,14 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  effect,
-  inject,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { ProfileHeaderComponent } from '../../components/profile-header/profile-header.component';
 import { ProfileService } from '../../services/profile.service';
-import { firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvatarUploadComponent } from '../../components/avatar-upload/avatar-upload.component';
 
@@ -24,6 +17,8 @@ export class ProfileSettingsComponent {
   private readonly fb = inject(NonNullableFormBuilder);
 
   profile = this.profileService.me;
+
+  private avatarUrl: File | null = null;
 
   form = this.fb.group({
     firstName: ['', [Validators.required]],
@@ -50,12 +45,16 @@ export class ProfileSettingsComponent {
 
     if (this.form.invalid) return;
 
-    firstValueFrom(
+    lastValueFrom(
       this.profileService.patchProfile({
         ...this.form.getRawValue(),
         stack: this.splitStack(this.form.getRawValue().stack),
       }),
     );
+
+    if (this.avatarUrl) {
+      lastValueFrom(this.profileService.uploadAvatar(this.avatarUrl));
+    }
   }
 
   splitStack(stack: string | null | string[]): string[] {
@@ -73,6 +72,6 @@ export class ProfileSettingsComponent {
   }
 
   onAvatarUpload(file: File) {
-    console.log('Загруженный файл:', file);
+    this.avatarUrl = file;
   }
 }

@@ -1,0 +1,5 @@
+@if (avatarUrl(); as avatarUrl) {
+  <img [src]="avatarUrl | ttImageUrl" alt="user-avatar" />
+} @else {
+  <img src="https://avatar.iran.liara.run/public" alt="user-avatar" />
+}
