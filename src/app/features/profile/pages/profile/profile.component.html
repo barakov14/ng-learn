@@ -1,10 +1,13 @@
 @if (profile(); as profile) {
   <header class="profile-page__header">
     <tt-profile-header [profile]="profile" />
-    <a class="btn to-setting-btn" routerLink="/settings">
+    <a class="btn to-setting-btn" routerLink="/settings" *ttCurrentUserMakeVisible="profile.id">
       <span>Редактировать</span>
       <fast-svg name="settings-dark" />
     </a>
+    <button class="btn to-setting-btn" *ttCurrentUserMakeNotVisible="profile.id" (click)="sendMessage(profile.id)">
+      <span>Написать</span> <fast-svg name="send-message" width="16px"/>
+    </button>
   </header>
 
   <main class="profile-page__body">

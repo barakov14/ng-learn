@@ -17,6 +17,7 @@ import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../../auth/services/auth.service';
 import { startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-post-input',
@@ -44,15 +45,15 @@ export class PostInputComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.postText.valueChanges.pipe(startWith(undefined)).subscribe(() => {
-      this.onTextAreaInput();
-    });
+    this.postText.valueChanges
+      .pipe(startWith(undefined), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.onTextAreaInput();
+      });
   }
 
   onTextAreaInput() {
     const textarea = this.postInputEl().nativeElement;
-
-    console.log(textarea);
 
     this.r2.setStyle(textarea, 'height', 'auto');
     this.r2.setStyle(textarea, 'style', textarea.scrollHeight + 'px');
@@ -62,20 +63,5 @@ export class PostInputComponent implements AfterViewInit {
     if (!this.postText.value) return;
 
     this.created.emit(this.postText.value);
-
-    /*if(this.isCommentInput()) {
-      await lastValueFrom(this.postsService.createComment({
-        authorId: this.profile().id,
-        text: this.postText,
-        postId: this.postId()!
-      }))
-      this.created.emit()
-    } else {
-      await lastValueFrom(this.postsService.createPost({
-        title: 'Angular is amazing',
-        content: this.postText,
-        authorId: this.profile().id,
-      }))
-    }*/
   }
 }

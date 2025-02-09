@@ -32,6 +32,11 @@ export const routes: Routes = [
             (c) => c.ProfileSettingsComponent,
           ),
       },
+      {
+        path: 'chats',
+        loadChildren: () =>
+          import('./features/chats/pages/chats.routes').then((r) => r.chatsRoutes),
+      },
     ],
     canActivate: [accessGuard],
   },

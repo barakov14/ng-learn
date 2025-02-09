@@ -1,0 +1,9 @@
+<div class="messages-wrapper">
+  @for(message of messages(); track message.id) {
+    <tt-chat-workspace-message [message]="message" />
+  } @empty {
+    <p class="empty">Нету сообщений.</p>
+  }
+</div>
+
+

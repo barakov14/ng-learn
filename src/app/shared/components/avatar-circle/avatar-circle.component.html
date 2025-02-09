@@ -1,5 +1,5 @@
 @if (avatarUrl(); as avatarUrl) {
-  <img [src]="avatarUrl | ttImageUrl" alt="user-avatar" />
+  <img [src]="avatarUrl | ttImageUrl" alt="user-avatar" draggable="false" />
 } @else {
-  <img src="https://avatar.iran.liara.run/public" alt="user-avatar" />
+  <img src="https://avatar.iran.liara.run/public" alt="user-avatar" draggable="false" />
 }

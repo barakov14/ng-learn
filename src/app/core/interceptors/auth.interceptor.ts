@@ -38,13 +38,12 @@ const handle403Error = (
         return next(addToken(req, newTokens.access_token));
       }),
       catchError((err) => {
-        authService.logout(); // Выход из системы при ошибке
+        authService.logout();
         return throwError(() => err);
       }),
-      finalize(() => (isRefreshing = false)), // Сбрасываем флаг независимо от результата
+      finalize(() => (isRefreshing = false)),
     );
   } else {
-    // Ждём, пока текущий процесс обновления токена завершится
     return refreshTokenSubject.pipe(
       filter((token) => token !== null),
       take(1),

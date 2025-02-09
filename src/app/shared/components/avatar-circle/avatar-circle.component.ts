@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 
 @Component({
@@ -10,10 +10,4 @@ import { ImageUrlPipe } from '../../pipes/image-url.pipe';
 })
 export class AvatarCircleComponent {
   avatarUrl = input.required<string>();
-
-  constructor() {
-    effect(() => {
-      console.log(this.avatarUrl());
-    });
-  }
 }

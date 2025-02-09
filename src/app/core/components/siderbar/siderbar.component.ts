@@ -25,7 +25,7 @@ export class SiderbarComponent {
       icon: 'home',
     },
     {
-      link: '/chat',
+      link: '/chats',
       label: 'Чаты',
       icon: 'chat',
     },

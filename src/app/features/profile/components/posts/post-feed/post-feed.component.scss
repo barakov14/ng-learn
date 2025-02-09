@@ -1,6 +1,10 @@
 :host {
-  display: grid;
-  grid-gap: 16px;
+  //display: grid;
   overflow-y: scroll;
   padding: 24px;
+}
+
+.empty {
+  margin-top: 16px;
+  text-align: center;
 }

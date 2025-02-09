@@ -1,12 +1,14 @@
 @let user = profile();
 <div class="profile-card">
-  <div class="avatar-name">
-    <tt-avatar-circle [avatarUrl]="user.avatarUrl" class="size70" />
-    <div class="profile-card__name">
-      <strong>{{ user.firstName }} {{ user.lastName }}</strong>
-      <span class="subtitle">{{ user.username }}</span>
+  <a [routerLink]="['/profile', user.id]">
+    <div class="avatar-name">
+      <tt-avatar-circle [avatarUrl]="user.avatarUrl" class="size70" />
+      <div class="profile-card__name">
+        <strong>{{ user.firstName }} {{ user.lastName }}</strong>
+        <span class="subtitle">{{ user.username }}</span>
+      </div>
     </div>
-  </div>
+  </a>
   <div class="profile-card__description">
     {{ user.description }}
   </div>

@@ -1,10 +1,12 @@
 @if (post(); as post) {
-  <tt-avatar-circle [avatarUrl]="post.author.avatarUrl" class="size32" />
+  <a [routerLink]="['/profile', post.author.id]">
+    <tt-avatar-circle [avatarUrl]="post.author.avatarUrl" class="size32" />
+  </a>
 
   <main class="post-body">
     <div class="post-header">
       <strong class="post__author">
-        {{ post.author.firstName }} {{ post.author.lastName }}
+        <a [routerLink]="['/profile', post.author.id]">{{ post.author.firstName }} {{ post.author.lastName }}</a>
         <span class="post-created-at">{{ post.createdAt | ttTimeAgo }}</span>
       </strong>
     </div>

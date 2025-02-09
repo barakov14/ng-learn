@@ -7,6 +7,7 @@ import { PostCommentComponent } from '../post-comment/post-comment.component';
 import { PostsService } from '../../../services/posts.service';
 import { lastValueFrom } from 'rxjs';
 import { TimeAgoPipe } from '../../../../../shared/pipes/time-ago.pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'tt-post',
@@ -16,6 +17,7 @@ import { TimeAgoPipe } from '../../../../../shared/pipes/time-ago.pipe';
     PostInputComponent,
     PostCommentComponent,
     TimeAgoPipe,
+    RouterLink,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
