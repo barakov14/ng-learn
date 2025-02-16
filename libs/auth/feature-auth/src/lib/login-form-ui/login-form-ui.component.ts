@@ -18,11 +18,11 @@ export class LoginFormUiComponent {
   private readonly fb = inject(NonNullableFormBuilder);
   readonly isLoading = input.required<boolean>();
 
-  login = output<LoginRequest>();
+  readonly login = output<LoginRequest>();
 
-  isPasswordVisible = false;
+  protected isPasswordVisible = false;
 
-  loginForm = this.fb.group({
+  protected readonly loginForm = this.fb.group({
     username: this.fb.control<string>('AdilkhanBrkv', Validators.required),
     password: this.fb.control<string>('SELrGxeaN8', [Validators.required, Validators.minLength(6)]),
   });
