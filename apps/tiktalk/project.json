@@ -23,7 +23,7 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/tiktalk/public"
+            "input": "public"
           }
         ],
         "styles": ["apps/tiktalk/src/styles.scss"],
