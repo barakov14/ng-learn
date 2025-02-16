@@ -1,0 +1,6 @@
+@if (profile(); as profile) {
+  <a [routerLink]="['/profile', profile.id]" class="companion-wrapper">
+    <tt-avatar-circle [avatarUrl]="profile.avatarUrl" class="size32" />
+    <div class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</div>
+  </a>
+}

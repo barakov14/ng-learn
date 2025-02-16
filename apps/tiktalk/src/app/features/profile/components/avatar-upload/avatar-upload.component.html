@@ -1,0 +1,21 @@
+@let previewUrlData = previewUrl();
+
+<tt-avatar-circle [avatarUrl]="previewUrlData ? previewUrlData : currentAvatar()" />
+<div
+  class="upload-container"
+  [class.dragging]="isDragging()"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave()"
+  (drop)="onDrop($event)"
+>
+  <label class="upload-box">
+    <input type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+    <div class="upload-placeholder">
+      <span class="upload-icon">
+        <fast-svg name="avatar-upload" />
+      </span>
+      <p>Перетащите изображение или <span class="upload-link">Загрузите</span></p>
+      <small>(разрешение до 5000 × 5000 px)</small>
+    </div>
+  </label>
+</div>

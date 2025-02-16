@@ -1,0 +1,128 @@
+<h4 class="h4-mb16">Заявка на ремонт TV</h4>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label class="tt-control-label mb16">
+    Тип TV
+    <select class="tt-input" formControlName="type">
+      <option value="Samsung">Samsung</option>
+      <option value="LG">LG</option>
+      <option value="Sony">Sony</option>
+      <option value="Philips">Philips</option>
+    </select>
+  </label>
+
+  <label class="tt-control-label mb16">
+    Модель
+    <input
+      formControlName="model"
+      class="tt-input"
+      type="text"
+      placeholder="Введите наименование модели"
+    />
+    @if (form.controls.model.touched && form.controls.model.hasError('startsWith')) {
+      <span class="validation">{{ form.controls.model.getError('startsWith') }}</span>
+    }
+  </label>
+
+  <label class="tt-control-label mb16">
+    Имя пользователя
+    <input
+      formControlName="username"
+      class="tt-input"
+      type="text"
+      placeholder="Введите имя пользователя"
+    />
+    @if (form.controls.username.touched && form.controls.username.hasError('nameValid')) {
+      <span class="validation">{{ form.controls.model.getError('nameValid').message }}</span>
+    }
+  </label>
+
+  <label class="tt-control-label mb16">
+    Причина обращения
+    <input formControlName="reason" class="tt-input" type="text" placeholder="Введите причину" />
+  </label>
+
+  <div class="form-grid">
+    <label class="tt-control-label mb16">
+      Дата обращения
+      <input formControlName="date" class="tt-input" type="text" placeholder="Введите дату" />
+    </label>
+
+    <label class="tt-control-label mb16">
+      Срок гарантии
+      <input
+        formControlName="warrantyPeriod"
+        class="tt-input"
+        type="text"
+        placeholder="Введите срок гарантии"
+      />
+    </label>
+  </div>
+
+  <div>
+    <div style="display: flex; justify-content: space-between">
+      <h4 class="h6 mb16">Адрес доставки</h4>
+      <button class="btn" [style.width.px]="50" (click)="addAddress()">+</button>
+    </div>
+
+    @for (address of form.controls.addresses.controls; track address; let index = $index) {
+      <div class="form-grid" [formGroup]="address">
+        <label class="tt-control-label">
+          Город
+          <input formControlName="city" class="tt-input" type="text" placeholder="Город" />
+        </label>
+
+        <label class="tt-control-label">
+          Улица
+          <input formControlName="street" class="tt-input" type="text" placeholder="Улица" />
+        </label>
+
+        <label class="tt-control-label">
+          Дом
+          <input formControlName="house" class="tt-input" type="text" placeholder="Дом" />
+        </label>
+
+        <label class="tt-control-label">
+          Квартира
+          <input formControlName="apartment" class="tt-input" type="text" placeholder="Квартира" />
+        </label>
+      </div>
+      <button class="btn btn-mb" (click)="deleteAddress(index)">Удалить</button>
+    }
+
+    <div>
+      <h4 class="h6 mb16">Дополнительно</h4>
+      <div style="display: flex; gap: 16px; font-size: 12px" formGroupName="additional">
+        @for (
+          control of form.controls.additional.controls | keyvalue;
+          track control;
+          let index = $index
+        ) {
+          <label>
+            {{ features()[index].title }}
+            <input type="checkbox" [formControlName]="control.key" />
+          </label>
+        }
+      </div>
+    </div>
+  </div>
+
+  <h4 style="margin-top: 24px">Дата обращение</h4>
+
+  <div class="two-columns" formGroupName="dateRange">
+    <label class="tt-control-label mb16">
+      От
+      <input formControlName="start" class="tt-input" type="date" placeholder="Старт с" />
+    </label>
+
+    <label class="tt-control-label mb16">
+      До
+      <input formControlName="end" class="tt-input" type="date" placeholder="До" />
+    </label>
+  </div>
+  @if (form.controls.dateRange.touched && form.controls.dateRange.hasError('dateRange')) {
+    <span class="validation">{{ form.controls.dateRange.getError('dateRange').message }}</span>
+  }
+
+  <button type="submit" class="btn btn-shadow mt20">Подтвердить</button>
+</form>

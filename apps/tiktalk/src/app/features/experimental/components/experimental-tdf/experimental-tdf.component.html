@@ -1,0 +1,107 @@
+<h4 class="h4-mb16">Заявка на ремонт TV</h4>
+
+<form #form="ngForm" (ngSubmit)="onSubmit($event)">
+  <label class="tt-control-label mb16">
+    Тип TV
+    <select class="tt-input">
+      <option>Samsung</option>
+      <option>LG</option>
+      <option>Sony</option>
+      <option>Philips</option>
+    </select>
+  </label>
+
+  <label class="tt-control-label mb16">
+    Модель
+    <input
+      ttNoReact
+      required
+      class="tt-input"
+      type="text"
+      placeholder="Введите наименование модели"
+      [ngModel]="tvForm.tvModel"
+      name="tvModel"
+      [ngModelOptions]="{ updateOn: 'change' }"
+      #tvModelControl="ngModel"
+    />
+  </label>
+  @if (tvModelControl.hasError('noReact')) {
+    <span class="validation">{{ tvModelControl.getError('noReact').message }}</span>
+  }
+
+  <label class="tt-control-label mb16">
+    Причина обращения
+    <input class="tt-input" type="text" placeholder="Введите причину" />
+  </label>
+
+  <div class="form-grid">
+    <label class="tt-control-label mb16">
+      Дата обращения
+      <input class="tt-input" type="text" placeholder="Введите дату" />
+    </label>
+
+    <label class="tt-control-label mb16">
+      Срок гарантии
+      <input class="tt-input" type="text" placeholder="Введите срок гарантии" />
+    </label>
+  </div>
+
+  <div>
+    <div style="display: flex; justify-content: space-between">
+      <h4 class="h6 mb16">Адрес доставки</h4>
+      <button class="btn" style="width: 50px">+</button>
+    </div>
+
+    <div class="form-grid">
+      <ng-container ngModelGroup="address">
+        <label class="tt-control-label">
+          Город
+          <input
+            class="tt-input"
+            type="text"
+            placeholder="Город"
+            name="city"
+            [ngModel]="tvForm.address.city"
+          />
+        </label>
+
+        <label class="tt-control-label">
+          Улица
+          <input class="tt-input" type="text" placeholder="Улица" name="street" />
+        </label>
+
+        <label class="tt-control-label">
+          Дом
+          <input class="tt-input" type="text" placeholder="Дом" name="building" />
+        </label>
+
+        <label class="tt-control-label">
+          Квартира
+          <input class="tt-input" type="text" placeholder="Квартира" name="apartment" />
+        </label>
+      </ng-container>
+
+      <button class="btn" style="grid-column-start: 1; grid-column-end: 3">Удалить</button>
+
+      <div>
+        <h4 class="h6 mb16">Дополнительно</h4>
+        <div style="display: flex; gap: 16px; font-size: 12px">
+          <label>
+            Wi-Fi модуль
+            <input type="checkbox" />
+          </label>
+          <label>
+            Смарт ТВ
+            <input type="checkbox" />
+          </label>
+          <label>
+            Подключение к антенне
+            <input type="checkbox" />
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-shadow mt20">Подтвердить</button>
+</form>

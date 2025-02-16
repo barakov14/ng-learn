@@ -1,0 +1,8 @@
+@if (currentUser(); as profile) {
+  <tt-avatar-circle [avatarUrl]="profile.avatarUrl" class="size32" />
+}
+<textarea class="hidden-textarea" [formControl]="messageText"></textarea>
+
+<button class="btn-icon" (click)="onSendMessage()">
+  <fast-svg name="send-message" />
+</button>

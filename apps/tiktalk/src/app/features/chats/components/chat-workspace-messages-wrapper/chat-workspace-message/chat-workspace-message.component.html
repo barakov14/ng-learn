@@ -1,0 +1,14 @@
+@if (message(); as message) {
+  <a [routerLink]="['/profile', message.userFromId]">
+    <tt-avatar-circle [avatarUrl]="message.user.avatarUrl" class="size32" />
+  </a>
+  <div class="message-container">
+    <strong class="medium-text mb8 user-select-none">
+      {{ message.user.firstName }} {{ message.user.lastName }}
+      {{ message.createdAt | date: 'HH:mm' }}
+    </strong>
+    <div class="message-text medium-text">
+      {{ message.text }}
+    </div>
+  </div>
+}

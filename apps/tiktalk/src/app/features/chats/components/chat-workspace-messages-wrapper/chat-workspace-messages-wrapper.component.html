@@ -1,0 +1,14 @@
+<div class="messages-wrapper" #messagesWrapper>
+  @for (group of messages() | ttGroupMessage; track group.date) {
+    <div class="messages">
+      <div class="date-separator">{{ group.date | ttDateSeparator }}</div>
+      @for (message of group.messages; track message.id) {
+        <tt-chat-workspace-message [message]="message" [class.is-mine]="message.isMine" />
+      }
+    </div>
+  } @empty {
+    <p class="empty">Нету сообщений.</p>
+  }
+</div>
+
+<tt-message-input (sent)="onSendMessage($event)" class="message-input" />

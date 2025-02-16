@@ -1,0 +1,61 @@
+<div class="profile-info">
+  @if (profile(); as profile) {
+    <tt-profile-header [profile]="profile" class="mb32" />
+    <div>
+      <h3 class="h6 mb16">Навыки</h3>
+      <div class="stack-wrapper mb32">
+        @for (stack of profile.stack; track stack) {
+          <div class="skill-tag">{{ stack }}</div>
+        } @empty {
+          <p class="subtitle">Нету навыков</p>
+        }
+      </div>
+      <h3 class="h6 mb16">О себе</h3>
+      <p class="description">
+        {{ !!profile.description ? profile.description : 'Нету описания' }}
+      </p>
+    </div>
+  }
+</div>
+<form class="profile-form__wrapper" [formGroup]="form" (ngSubmit)="onSave()">
+  <div class="profile-form mb32">
+    <div class="two-columns mb32">
+      <label class="tt-form-label">
+        <span class="tt-form-label__text">Имя</span>
+        <input type="text" class="tt-form-input" formControlName="firstName" />
+      </label>
+      <label class="tt-form-label">
+        <span class="tt-form-label__text">Фамилия</span>
+        <input type="text" class="tt-form-input" formControlName="lastName" />
+      </label>
+    </div>
+    <label class="tt-form-label mb32">
+      <span class="tt-form-label__text">Telegram username</span>
+      <input type="text" class="tt-form-input" formControlName="username" />
+    </label>
+    <label class="tt-form-label mb32">
+      <span class="tt-form-label__text">О себе</span>
+      <textarea
+        type="text"
+        class="tt-form-input tt-textarea"
+        formControlName="description"
+      ></textarea>
+    </label>
+    <label class="tt-form-label">
+      <span class="tt-form-label__text">Навыки(стэк)</span>
+      <input type="text" class="tt-form-input" formControlName="stack" />
+    </label>
+
+    @if (profile(); as profile) {
+      <tt-avatar-upload
+        (imageUploaded)="onAvatarUpload($event)"
+        [currentAvatar]="profile.avatarUrl"
+      />
+    }
+  </div>
+  <div>
+    <div>
+      <button class="btn">Сохранить</button>
+    </div>
+  </div>
+</form>
