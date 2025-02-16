@@ -8,7 +8,7 @@ import { ImageUrlPipe } from '@tt/common/utils';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { PostFeedComponent } from '@tt/posts/feature-posts';
 import { ChatsService } from '@tt/chats/data-access';
-import { ChatsDataService } from '../../../../../chats/data-access/src/lib/services/chats-data.service';
+import { ChatsDataService } from '@tt/chats/data-access';
 import { CurrentUserMakeVisibleDirective, UserMakeNotVisibleDirective } from '@tt/common/utils';
 
 @Component({

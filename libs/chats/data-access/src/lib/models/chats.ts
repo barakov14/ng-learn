@@ -1,5 +1,5 @@
 import { Message } from './message';
-import { Profile } from '../../../../../common/data-access/src/lib/models/profile.interface';
+import { Profile } from '@tt/profile/data-access';
 
 export type UserFrom = {
   id: number;

@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
-import { AvatarCircleComponent } from '../../../../../common/ui/src/lib/avatar-circle/avatar-circle.component';
+import { AvatarCircleComponent } from '@tt/common/ui';
 
 @Component({
   selector: 'tt-avatar-upload',
