@@ -1,6 +1,0 @@
-<tt-post-input (created)="onCreated($event)" />
-@for (post of feed(); track post.id) {
-  <tt-post [post]="post" />
-} @empty {
-  <p class="empty">Нету постов</p>
-}

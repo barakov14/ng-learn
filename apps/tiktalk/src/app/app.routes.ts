@@ -1,11 +1,10 @@
 import { Routes } from '@angular/router';
-import { accessGuard } from './core/guards/access.guard';
+import { accessGuard } from '@tt/auth/data-access';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () =>
-      import('./features/auth/pages/login/login.component').then((c) => c.LoginComponent),
+    loadComponent: () => import('@tt/auth/feature-auth').then((c) => c.LoginComponent),
   },
   {
     path: 'experimental',
@@ -14,33 +13,26 @@ export const routes: Routes = [
   },
   {
     path: '',
-    loadComponent: () => import('./core/layout/layout.component').then((c) => c.LayoutComponent),
+    loadComponent: () => import('./layout/layout.component').then((c) => c.LayoutComponent),
     children: [
       {
         path: '',
         loadComponent: () =>
-          import('./features/profile/pages/profiles-search/profiles-search.component').then(
-            (c) => c.ProfilesSearchComponent,
-          ),
+          import('@tt/profile/feature-profile-search').then((c) => c.ProfilesSearchComponent),
       },
       {
         path: 'profile/:id',
-        loadComponent: () =>
-          import('./features/profile/pages/profile/profile.component').then(
-            (c) => c.ProfileComponent,
-          ),
+        loadComponent: () => import('@tt/profile/feature-profile').then((c) => c.ProfileComponent),
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('./features/profile/pages/profile-settings/profile-settings.component').then(
-            (c) => c.ProfileSettingsComponent,
-          ),
+          import('@tt/profile/feature-profile-settings').then((c) => c.ProfileSettingsComponent),
       },
       {
         path: 'chats',
         loadChildren: () =>
-          import('./features/chats/pages/chats.routes').then((r) => r.chatsRoutes),
+          import('../../../../libs/chats/chats.routes').then((r) => r.chatsRoutes),
       },
     ],
     canActivate: [accessGuard],

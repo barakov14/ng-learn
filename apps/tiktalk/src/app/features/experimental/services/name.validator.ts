@@ -2,7 +2,7 @@ import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/form
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Profile } from '../../../shared/models/profile.interface';
+import { Profile } from '@tt/profile/data-access';
 
 @Injectable({ providedIn: 'root' })
 export class NameValidator implements AsyncValidator {

@@ -18,7 +18,28 @@
     "target": "ES2022",
     "module": "ES2022",
     "lib": ["ES2022", "dom"],
-    "paths": {},
+    "paths": {
+      "@tt/auth/data-access": ["libs/auth/data-access/src/index.ts"],
+      "@tt/auth/feature-auth": ["libs/auth/feature-auth/src/index.ts"],
+      "@tt/chats/data-access": ["libs/chats/data-access/src/index.ts"],
+      "@tt/chats/feature-chat-workspace": ["libs/chats/feature-chat-workspace/src/index.ts"],
+      "@tt/chats/feature-chats": ["libs/chats/feature-chats/src/index.ts"],
+      "@tt/chats/utils": ["libs/chats/utils/src/index.ts"],
+      "@tt/common/data-access": ["libs/common/data-access/src/index.ts"],
+      "@tt/common/ui": ["libs/common/ui/src/index.ts"],
+      "@tt/common/utils": ["libs/common/utils/src/index.ts"],
+      "@tt/posts/data-access": ["libs/posts/data-access/src/index.ts"],
+      "@tt/posts/feature-posts": ["libs/posts/feature-posts/src/index.ts"],
+      "@tt/posts/feature-posts-comment": ["libs/posts/feature-posts-comment/src/index.ts"],
+      "@tt/posts/ui": ["libs/posts/ui/src/index.ts"],
+      "@tt/profile/data-access": ["libs/profile/data-access/src/index.ts"],
+      "@tt/profile/feature-profile": ["libs/profile/feature-profile/src/index.ts"],
+      "@tt/profile/feature-profile-search": ["libs/profile/feature-profile-search/src/index.ts"],
+      "@tt/profile/feature-profile-settings": [
+        "libs/profile/feature-profile-settings/src/index.ts"
+      ],
+      "@tt/profile/ui": ["libs/profile/ui/src/index.ts"]
+    },
     "baseUrl": ".",
     "rootDir": "."
   },
