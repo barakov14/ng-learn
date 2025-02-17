@@ -24,7 +24,6 @@
       "@tt/chats/data-access": ["libs/chats/data-access/src/index.ts"],
       "@tt/chats/feature-chat-workspace": ["libs/chats/feature-chat-workspace/src/index.ts"],
       "@tt/chats/feature-chats": ["libs/chats/feature-chats/src/index.ts"],
-      "@tt/chats/utils": ["libs/chats/utils/src/index.ts"],
       "@tt/common/data-access": ["libs/common/data-access/src/index.ts"],
       "@tt/common/ui": ["libs/common/ui/src/index.ts"],
       "@tt/common/utils": ["libs/common/utils/src/index.ts"],
