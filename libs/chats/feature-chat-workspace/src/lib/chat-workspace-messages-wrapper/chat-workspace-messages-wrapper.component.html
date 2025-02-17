@@ -1,5 +1,5 @@
 <div class="messages-wrapper" #messagesWrapper>
-  @for (group of messages() | ttGroupMessage; track group.date) {
+  @for (group of grouppedMessage(); track group.date) {
     <div class="messages">
       <div class="date-separator">{{ group.date | ttDateSeparator }}</div>
       @for (message of group.messages; track message.id) {

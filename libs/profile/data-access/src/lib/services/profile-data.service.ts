@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { Pageble } from '@tt/common/data-access';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
+import { Chat } from '@tt/chats/data-access';
 
 @Injectable({
   providedIn: 'root',
@@ -52,5 +53,9 @@ export class ProfileDataService {
     data.append('image', imageUrl);
 
     return this.http.post('/account/upload_image', data);
+  }
+
+  createChat(userId: number) {
+    return this.http.post<Chat>(`/chat/${userId}`, {});
   }
 }

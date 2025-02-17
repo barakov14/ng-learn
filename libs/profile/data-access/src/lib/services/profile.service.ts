@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProfileDataService } from './profile-data.service';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
 
 @Injectable({
   providedIn: 'root',
@@ -42,5 +42,9 @@ export class ProfileService {
 
   uploadAvatar(imageUrl: File) {
     return this.profileDataService.uploadAvatar(imageUrl);
+  }
+
+  createChat(userId: number) {
+    return this.profileDataService.createChat(userId);
   }
 }

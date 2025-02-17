@@ -16,12 +16,12 @@ import { PostsDataService } from '@tt/posts/data-access';
 import { PostsService } from '@tt/posts/data-access';
 import { debounceTime, fromEvent, lastValueFrom, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CurrentUserMakeVisibleDirective } from '@tt/common/utils';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
+import { AuthService } from '@tt/auth/data-access';
 
 @Component({
   selector: 'tt-post-feed',
-  imports: [PostComponent, PostInputComponent, CurrentUserMakeVisibleDirective],
+  imports: [PostComponent, PostInputComponent],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +32,7 @@ export class PostFeedComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly r2 = inject(Renderer2);
   private readonly postsService = inject(PostsService);
+  protected readonly currentUser = inject(AuthService).currentUser;
   readonly profile = input.required<Profile>();
   protected readonly feed = this.postsService.posts;
 

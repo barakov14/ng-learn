@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ProfileService } from '@tt/profile/data-access';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ImageUrlPipe } from '@tt/common/utils';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-siderbar',
@@ -13,10 +12,8 @@ import { FastSvgComponent } from '@push-based/ngx-fast-svg';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SiderbarComponent {
-  private readonly profileService = inject(ProfileService);
-
-  protected readonly subscribers$ = toSignal(this.profileService.getSubscribersShortList());
-  protected readonly me$ = toSignal(this.profileService.getMe());
+  readonly currentUser = input.required<Profile>();
+  readonly profiles = input.required<Profile[]>();
 
   protected readonly menuItems = [
     {

@@ -1,5 +1,5 @@
-import { Message } from './message';
-import { Profile } from '@tt/profile/data-access';
+import { Message, Messages } from './message';
+import { Profile } from '@tt/common/data-access';
 
 export type UserFrom = {
   id: number;
@@ -32,3 +32,8 @@ export type Chat = {
   userSecond: UserSecond;
   messages: Message[];
 };
+
+export type GrouppedChat = {
+  date: Date;
+  messages: Messages;
+}[];

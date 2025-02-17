@@ -1,7 +1,7 @@
 {
   "name": "feature-profile-search",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/зprofile/feature-profile-search/src",
+  "sourceRoot": "libs/profile/feature-profile-search/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": [],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/зprofile/feature-profile-search/jest.config.ts"
+        "jestConfig": "libs/profile/feature-profile-search/jest.config.ts"
       }
     },
     "lint": {

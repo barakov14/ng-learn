@@ -12,11 +12,11 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { Message } from '@tt/chats/data-access';
 import { AuthService } from '@tt/auth/data-access';
 import { ChatWorkspaceMessagesWrapperComponent } from '../chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
 import { ChatWorkspaceHeaderComponent } from '../chat-workspace-messages-wrapper/chat-workspace-header/chat-workspace-header.component';
-import { Profile } from '@tt/profile/data-access';
+import { GrouppedChat } from '../../../../data-access/src/lib/models/chats';
+import { Messages } from '../../../../data-access/src/lib/models/message';
 
 @Component({
   selector: 'tt-chat-workspace',
@@ -33,7 +33,7 @@ export class ChatWorkspaceComponent {
 
   private readonly chatId = toSignal(this.route.params.pipe(map((params) => params['id'])));
 
-  protected readonly messages = signal<Array<Message & { user: Profile; isMine: boolean }>>([]);
+  protected readonly messages = signal<Messages>([]);
 
   protected readonly activeChat = toSignal(
     this.route.params.pipe(
@@ -44,7 +44,9 @@ export class ChatWorkspaceComponent {
           switchMap(() => this.chatsService.getChatById(id)),
         ),
       ),
-      tap(({ messages }) => this.messages.set(messages)),
+      tap((res) => {
+        this.messages.set(res.messages);
+      }),
     ),
   );
 

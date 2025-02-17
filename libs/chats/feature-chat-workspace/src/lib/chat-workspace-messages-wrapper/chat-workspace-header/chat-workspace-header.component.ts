@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AvatarCircleComponent } from '@tt/common/ui';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-chat-workspace-header',

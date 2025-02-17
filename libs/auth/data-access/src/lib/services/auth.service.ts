@@ -4,7 +4,7 @@ import { catchError, tap, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { LoginRequest, TokenResponse } from '../models/auth';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
 
 @Injectable({
   providedIn: 'root',

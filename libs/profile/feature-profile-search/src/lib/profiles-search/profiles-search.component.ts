@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { Profile, ProfileService } from '@tt/profile/data-access';
+import { ProfileService } from '@tt/profile/data-access';
 import { ProfileCardComponent } from '@tt/profile/feature-profile-search';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
 import { lastValueFrom } from 'rxjs';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-profiles-search',

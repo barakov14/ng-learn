@@ -1,4 +1,10 @@
-<tt-siderbar />
-<main class="main">
-  <router-outlet />
-</main>
+@let profilesData = profiles();
+@let currentUserData = currentUser();
+
+@if(currentUserData && profilesData) {
+  <tt-siderbar [currentUser]="currentUserData" [profiles]="profilesData"/>
+
+  <main class="main">
+    <router-outlet />
+  </main>
+}

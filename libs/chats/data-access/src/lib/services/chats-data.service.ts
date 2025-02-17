@@ -7,10 +7,6 @@ import { SendMessageResponse } from '../models/message';
 export class ChatsDataService {
   private readonly http = inject(HttpClient);
 
-  createChat(userId: number) {
-    return this.http.post<Chat>(`/chat/${userId}`, {});
-  }
-
   getMyChats() {
     return this.http.get<Chats[]>(`/chat/get_my_chats/`);
   }

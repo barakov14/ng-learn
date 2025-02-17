@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Message } from '@tt/chats/data-access';
 import { AvatarCircleComponent } from '@tt/common/ui';
-import { Profile } from '@tt/profile/data-access';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-chat-workspace-message',

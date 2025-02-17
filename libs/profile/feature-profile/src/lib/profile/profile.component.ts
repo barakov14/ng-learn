@@ -7,31 +7,20 @@ import { ProfileHeaderComponent } from '@tt/profile/ui';
 import { ImageUrlPipe } from '@tt/common/utils';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { PostFeedComponent } from '@tt/posts/feature-posts';
-import { ChatsService } from '@tt/chats/data-access';
-import { ChatsDataService } from '@tt/chats/data-access';
-import { CurrentUserMakeVisibleDirective, UserMakeNotVisibleDirective } from '@tt/common/utils';
+import { AuthService } from '@tt/auth/data-access';
 
 @Component({
   selector: 'tt-profile',
-  imports: [
-    ProfileHeaderComponent,
-    RouterLink,
-    ImageUrlPipe,
-    FastSvgComponent,
-    PostFeedComponent,
-    CurrentUserMakeVisibleDirective,
-    UserMakeNotVisibleDirective,
-  ],
+  imports: [ProfileHeaderComponent, RouterLink, ImageUrlPipe, FastSvgComponent, PostFeedComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ChatsDataService, ChatsService],
 })
 export class ProfileComponent {
   private readonly profileService = inject(ProfileService);
-  private readonly chatsService = inject(ChatsService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  protected readonly currentUser = inject(AuthService).currentUser;
 
   protected readonly subscribers$ = toSignal(this.profileService.getSubscribersShortList(5));
 
@@ -45,7 +34,7 @@ export class ProfileComponent {
   );
 
   async sendMessage(userId: number) {
-    const res = await lastValueFrom(this.chatsService.createChat(userId));
+    const res = await lastValueFrom(this.profileService.createChat(userId));
     this.router.navigate(['/chats', res.id]);
   }
 }

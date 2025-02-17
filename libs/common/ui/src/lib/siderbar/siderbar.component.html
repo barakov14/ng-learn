@@ -22,7 +22,7 @@
   <div class="subscribers-list mb16">
     <h4 class="subscribers-list__title mb16">Подписчики</h4>
     <ul class="subscribers-menu-list mb16">
-      @for (profile of subscribers$()?.slice(0, 3); track profile.id) {
+      @for (profile of profiles().slice(0, 3); track profile.id) {
         <li>
           <a
             class="menu-item"
@@ -50,7 +50,7 @@
   </div>
 
   <div class="user-profile">
-    @if (me$(); as me) {
+    @if (currentUser(); as me) {
       <a class="avatar-username" routerLink="/profile/me" routerLinkActive="link-active">
         @if (me.avatarUrl) {
           <img [src]="me.avatarUrl | ttImageUrl" alt="user-avatar" class="avatar" />

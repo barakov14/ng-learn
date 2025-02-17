@@ -1,4 +1,7 @@
-<tt-post-input (created)="onCreated($event)" *ttCurrentUserMakeVisible="profile().id"/>
+@if(profile().id === currentUser()?.id) {
+  <tt-post-input (created)="onCreated($event)"/>
+}
+
 @for (post of feed(); track post.id) {
   <tt-post [post]="post" />
 } @empty {
