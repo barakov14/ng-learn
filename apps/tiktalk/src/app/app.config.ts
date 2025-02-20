@@ -12,6 +12,8 @@ import { provideFastSVG } from '@push-based/ngx-fast-svg';
 import { httpUrlInterceptor } from '@tt/common/data-access';
 import { AuthService } from '@tt/auth/data-access';
 import { of } from 'rxjs';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,5 +27,7 @@ export const appConfig: ApplicationConfig = {
       const authService = inject(AuthService);
       return authService.isAuthenticated ? authService.getCurrentUser() : of();
     }),
+    provideStore(),
+    provideEffects(),
   ],
 };

@@ -1,5 +1,9 @@
 import { Routes } from '@angular/router';
 import { accessGuard } from '@tt/auth/data-access';
+import { provideState } from '@ngrx/store';
+import { PostsDataService, postsFeature } from '@tt/posts/data-access';
+import { provideEffects } from '@ngrx/effects';
+import { PostsEffects } from '@tt/posts/data-access';
 
 export const routes: Routes = [
   {
@@ -23,6 +27,7 @@ export const routes: Routes = [
       {
         path: 'profile/:id',
         loadComponent: () => import('@tt/profile/feature-profile').then((c) => c.ProfileComponent),
+        providers: [provideState(postsFeature), provideEffects(PostsEffects), PostsDataService],
       },
       {
         path: 'settings',
