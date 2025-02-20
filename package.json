@@ -22,13 +22,14 @@
     "@maskito/angular": "^3.2.1",
     "@maskito/core": "^3.2.1",
     "@ngrx/effects": "^19.0.1",
+    "@ngrx/operators": "^19.0.1",
     "@ngrx/store": "^19.0.1",
     "@push-based/ngx-fast-svg": "^18.1.0",
     "ngx-cookie-service": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0",
-    "@ngrx/operators": "^19.0.1"
+    "@ngrx/store-devtools": "^19.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.1.6",
@@ -40,6 +41,7 @@
     "@ngrx/effects": "^19.0.1",
     "@ngrx/operators": "^19.0.1",
     "@ngrx/store": "^19.0.1",
+    "@ngrx/store-devtools": "^19.0.1",
     "@nx/angular": "20.4.4",
     "@nx/eslint": "20.4.4",
     "@nx/eslint-plugin": "20.4.4",

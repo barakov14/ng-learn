@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
-import { Post, PostComment } from '@tt/posts/data-access';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
+import { Post } from '@tt/posts/data-access';
 import { AvatarCircleComponent } from '@tt/common/ui';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { PostInputComponent } from '@tt/posts/ui';
 import { PostCommentComponent } from '@tt/posts/feature-posts-comment';
-import { PostsService } from '@tt/posts/data-access';
-import { lastValueFrom } from 'rxjs';
 import { TimeAgoPipe } from '@tt/common/utils';
 import { RouterLink } from '@angular/router';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-post',
@@ -23,26 +22,13 @@ import { RouterLink } from '@angular/router';
   styleUrl: './post.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostComponent implements OnInit {
-  private readonly postsService = inject(PostsService);
+export class PostComponent {
   readonly post = input.required<Post>();
-  protected readonly comment = signal<PostComment[]>([]);
+  readonly currentUser = input.required<Profile>();
+  readonly createComment = output<string>();
+  readonly loadingIndicator = input.required<boolean>();
 
-  ngOnInit() {
-    this.comment.set(this.post().comments);
-  }
-
-  async onCreated(commentText: string) {
-    await lastValueFrom(
-      this.postsService.createComment({
-        authorId: this.post().author.id,
-        text: commentText,
-        postId: this.post().id,
-      }),
-    );
-
-    const comments = await lastValueFrom(this.postsService.getCommentsByPostId(this.post().id));
-
-    this.comment.set(comments);
+  onCreatedComment(commentText: string) {
+    this.createComment.emit(commentText);
   }
 }

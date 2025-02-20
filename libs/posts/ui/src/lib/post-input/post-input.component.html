@@ -1,7 +1,7 @@
 @if (profile(); as profile) {
   <tt-avatar-circle [avatarUrl]="profile.avatarUrl" class="size32" />
 }
-<textarea class="hidden-textarea" [formControl]="postText" #postInput></textarea>
+<textarea class="hidden-textarea" placeholder="Введите что то..." [formControl]="postText" #postInput></textarea>
 
 <button class="btn-icon" (click)="onCreate()">
   <fast-svg name="send-message" />

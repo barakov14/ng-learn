@@ -22,11 +22,14 @@
     </div>
 
     <div class="post__comment-wrapper">
-      @for (comment of comment(); track comment.id) {
+      @for (comment of post.comments; track comment.id) {
         <tt-post-comment [comment]="comment" />
       }
     </div>
 
-    <tt-post-input [isCommentInput]="true" [postId]="post.id" (created)="onCreated($event)" />
+
+    @if(currentUser(); as currentUser) {
+      <tt-post-input [loadingIndicator]="loadingIndicator()" [isCommentInput]="true" [profile]="currentUser" [postId]="post.id" (created)="onCreatedComment($event)" />
+    }
   </main>
 }

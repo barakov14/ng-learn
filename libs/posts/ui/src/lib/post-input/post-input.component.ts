@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   HostBinding,
   inject,
@@ -14,9 +15,9 @@ import {
 import { AvatarCircleComponent } from '@tt/common/ui';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '@tt/auth/data-access';
 import { startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Profile } from '@tt/common/data-access';
 
 @Component({
   selector: 'tt-post-input',
@@ -28,15 +29,23 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class PostInputComponent implements AfterViewInit {
   private readonly r2 = inject(Renderer2);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly authService = inject(AuthService);
-  readonly profile = this.authService.currentUser;
+  readonly profile = input.required<Profile>();
   readonly isCommentInput = input<boolean>(false);
   readonly postId = input<number>();
   readonly created = output<string>();
+  readonly loadingIndicator = input<boolean>();
 
   protected readonly postInputEl = viewChild.required<ElementRef<HTMLTextAreaElement>>('postInput');
 
   protected readonly postText = new FormControl<string>('');
+
+  private readonly formResetHandler = effect(() => {
+    const loadingIndicator = this.loadingIndicator();
+
+    if (loadingIndicator === false) {
+      this.postText.reset();
+    }
+  });
 
   @HostBinding('class.comment')
   get isComment() {

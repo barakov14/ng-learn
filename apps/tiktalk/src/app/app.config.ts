@@ -2,7 +2,7 @@ import {
   ApplicationConfig,
   inject,
   provideAppInitializer,
-  provideZoneChangeDetection,
+  provideZoneChangeDetection, isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -14,6 +14,7 @@ import { AuthService } from '@tt/auth/data-access';
 import { of } from 'rxjs';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,13 +22,14 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideFastSVG({
-      url: (name) => `/assets/icons/${name}.svg`,
+        url: (name) => `/assets/icons/${name}.svg`,
     }),
     provideAppInitializer(() => {
-      const authService = inject(AuthService);
-      return authService.isAuthenticated ? authService.getCurrentUser() : of();
+        const authService = inject(AuthService);
+        return authService.isAuthenticated ? authService.getCurrentUser() : of();
     }),
     provideStore(),
     provideEffects(),
-  ],
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+],
 };

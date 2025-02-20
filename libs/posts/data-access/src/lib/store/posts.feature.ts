@@ -31,16 +31,12 @@ export const postsFeature = createFeature({
     on(postsActions.fetchPostsSuccess, (state, { posts }) => ({
       ...state,
       isLoading: false,
-      userPosts: posts.reduce(
-        (acc, post) => {
-          acc[post.author.id] = {
-            posts: [...(acc[post.author.id]?.posts || []), post],
-          };
-          return acc;
+      userPosts: {
+        ...state.userPosts,
+        [state.currentUserId]: {
+          posts: [...(state.userPosts[state.currentUserId]?.posts || []), ...posts],
         },
-        { ...state.userPosts },
-      ),
-      posts,
+      },
     })),
 
     on(postsActions.fetchPostsFailure, (state, { error }) => ({
@@ -61,7 +57,7 @@ export const postsFeature = createFeature({
       userPosts: {
         ...state.userPosts,
         [post.author.id]: {
-          posts: [...state.userPosts[post.author.id].posts, post],
+          posts: [post, ...state.userPosts[post.author.id].posts],
         },
       },
     })),
@@ -86,7 +82,7 @@ export const postsFeature = createFeature({
         [state.currentUserId]: {
           posts: state.userPosts[state.currentUserId]?.posts.map((post) => ({
             ...post,
-            comments: [...post.comments, comment],
+            comments: [comment, ...post.comments],
           })),
         },
       },

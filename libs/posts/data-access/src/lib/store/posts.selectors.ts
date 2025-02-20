@@ -1,10 +1,15 @@
 import { PostsState } from './posts.feature';
-import { createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
-export const selectPostsFeature = (state: { feature: PostsState }) => state.feature;
+export const selectPostsFeature = createFeatureSelector<PostsState>('posts');
 
 export const selectPosts = (userId: number) =>
-  createSelector(selectPostsFeature, (state: PostsState) => state.userPosts[userId].posts);
+  createSelector(selectPostsFeature, (state: PostsState) => state.userPosts[userId]?.posts ?? []);
+
+export const selectCurrentUserId = createSelector(
+  selectPostsFeature,
+  (state: PostsState) => state.currentUserId,
+);
 
 export const selectPostsLoadingIndicator = createSelector(
   selectPostsFeature,

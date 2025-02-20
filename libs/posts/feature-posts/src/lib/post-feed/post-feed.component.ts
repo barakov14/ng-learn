@@ -13,14 +13,16 @@ import {
 } from '@angular/core';
 import { PostComponent } from '../post/post.component';
 import { PostInputComponent } from '@tt/posts/ui';
-import { postsActions, PostsDataService } from '@tt/posts/data-access';
-import { PostsService } from '@tt/posts/data-access';
+import { postsActions } from '@tt/posts/data-access';
 import { debounceTime, fromEvent, lastValueFrom, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Profile } from '@tt/common/data-access';
 import { AuthService } from '@tt/auth/data-access';
 import { Store } from '@ngrx/store';
-import { selectPosts } from '../../../../data-access/src/lib/store/posts.selectors';
+import {
+  selectPosts,
+  selectPostsLoadingIndicator,
+} from '../../../../data-access/src/lib/store/posts.selectors';
 
 @Component({
   selector: 'tt-post-feed',
@@ -36,6 +38,12 @@ export class PostFeedComponent implements OnInit {
   private readonly store = inject(Store);
   protected readonly currentUser = inject(AuthService).currentUser;
   readonly profile = input.required<Profile>();
+  protected readonly loadingIndicator = this.store.selectSignal(selectPostsLoadingIndicator);
+
+  private readonly getPosts = effect(() => {
+    const profile = this.profile();
+    this.store.dispatch(postsActions.requestFetchPosts({ userId: profile.id }));
+  });
 
   protected readonly feed = computed(() => {
     const profile = this.profile();
@@ -62,15 +70,19 @@ export class PostFeedComponent implements OnInit {
     this.r2.setStyle(this.hostEl.nativeElement, 'height', `${height}px`);
   }
 
-  onCreated(postText: string) {
-    /*lastValueFrom(
-      this.postsService.createPost({
-        title: 'Angular is amazing',
-        content: postText,
-        authorId: this.profile().id,
+  onCreateComment(postId: number, text: string) {
+    this.store.dispatch(
+      postsActions.requestCreateComment({
+        payload: {
+          text,
+          postId,
+          authorId: this.currentUser()!.id,
+        },
       }),
-    );*/
+    );
+  }
 
+  onCreatePost(postText: string) {
     this.store.dispatch(
       postsActions.requestCreatePost({
         payload: {

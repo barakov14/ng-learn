@@ -5,7 +5,7 @@
 <!--    Проверка пользователя на то, что является ли данный профиль страницой текущего пользователя   -->
 
     @if(profile.id === currentUser()?.id) {
-      <a class="btn to-setting-btn" routerLink="/settings" *ttCurrentUserMakeVisible="profile.id">
+      <a class="btn to-setting-btn" routerLink="/settings">
         <span>Редактировать</span>
         <fast-svg name="settings-dark" />
       </a>
