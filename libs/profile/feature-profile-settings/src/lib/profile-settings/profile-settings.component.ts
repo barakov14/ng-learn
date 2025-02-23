@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
 import { ProfileHeaderComponent } from '@tt/profile/ui';
-import { ProfileService } from '@tt/profile/data-access';
+import { profileActions, ProfileService, selectCurrentUser } from '@tt/profile/data-access';
 import { lastValueFrom } from 'rxjs';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvatarUploadComponent } from '../avatar-upload/avatar-upload.component';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-profile-settings',
@@ -12,13 +13,17 @@ import { AvatarUploadComponent } from '../avatar-upload/avatar-upload.component'
   styleUrl: './profile-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileSettingsComponent {
-  private readonly profileService = inject(ProfileService);
+export class ProfileSettingsComponent implements OnInit {
+  private readonly store = inject(Store);
   private readonly fb = inject(NonNullableFormBuilder);
 
-  protected readonly profile = this.profileService.me;
+  protected readonly profile = this.store.selectSignal(selectCurrentUser);
 
   private avatarUrl: File | null = null;
+
+  ngOnInit() {
+    this.store.dispatch(profileActions.fetchGetMe());
+  }
 
   form = this.fb.group({
     firstName: ['', [Validators.required]],
@@ -45,15 +50,21 @@ export class ProfileSettingsComponent {
 
     if (this.form.invalid) return;
 
-    lastValueFrom(
-      this.profileService.patchProfile({
-        ...this.form.getRawValue(),
-        stack: this.splitStack(this.form.getRawValue().stack),
+    this.store.dispatch(
+      profileActions.fetchPatchProfile({
+        data: {
+          ...this.form.value,
+          stack: this.splitStack(this.form.getRawValue().stack),
+        },
       }),
     );
 
     if (this.avatarUrl) {
-      lastValueFrom(this.profileService.uploadAvatar(this.avatarUrl));
+      this.store.dispatch(
+        profileActions.fetchUploadAvatar({
+          imageUrl: this.avatarUrl,
+        }),
+      );
     }
   }
 

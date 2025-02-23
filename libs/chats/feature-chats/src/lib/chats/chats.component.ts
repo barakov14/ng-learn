@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ChatsDataService } from '@tt/chats/data-access';
 import { ChatsService } from '@tt/chats/data-access';
@@ -10,6 +10,11 @@ import { ChatsListComponent } from '../chats-list/chats-list.component';
   templateUrl: './chats.component.html',
   styleUrl: './chats.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ChatsDataService, ChatsService],
 })
-export class ChatsComponent {}
+export class ChatsComponent implements OnInit {
+  readonly #chatsService = inject(ChatsService);
+
+  ngOnInit() {
+    this.#chatsService.connectWs();
+  }
+}

@@ -4,6 +4,10 @@ import { provideState } from '@ngrx/store';
 import { PostsDataService, postsFeature } from '@tt/posts/data-access';
 import { provideEffects } from '@ngrx/effects';
 import { PostsEffects } from '@tt/posts/data-access';
+import { profileFeature } from '../../../../libs/profile/data-access/src/lib/store/profile.feature';
+import { ProfileEffects } from '../../../../libs/profile/data-access/src/lib/store/profile.effects';
+import { ProfileDataService, ProfileService } from '@tt/profile/data-access';
+import { ChatsDataService, ChatsService } from '@tt/chats/data-access';
 
 export const routes: Routes = [
   {
@@ -18,6 +22,12 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () => import('./layout/layout.component').then((c) => c.LayoutComponent),
+    providers: [
+      provideState(profileFeature),
+      provideEffects(ProfileEffects),
+      ProfileService,
+      ProfileDataService,
+    ],
     children: [
       {
         path: '',
@@ -36,6 +46,7 @@ export const routes: Routes = [
       },
       {
         path: 'chats',
+        providers: [ChatsDataService, ChatsService],
         loadChildren: () =>
           import('../../../../libs/chats/chats.routes').then((r) => r.chatsRoutes),
       },

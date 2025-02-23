@@ -5,7 +5,7 @@ import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { Profile } from '@tt/common/data-access';
 
 @Component({
-  selector: 'tt-siderbar',
+  selector: 'tt-sidebar',
   imports: [RouterLink, RouterLinkActive, ImageUrlPipe, FastSvgComponent],
   templateUrl: './siderbar.component.html',
   styleUrl: './siderbar.component.scss',

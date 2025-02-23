@@ -13,7 +13,7 @@
     {{ user.description }}
   </div>
   <ul class="profile-card__tags">
-    @for (stack of user.stack; track stack) {
+    @for (stack of user.stack; track $index) {
       <li class="skill-tag">{{ stack }}</li>
     }
   </ul>

@@ -1,13 +1,17 @@
 :host {
   display: flex;
+  height: calc(100vh + 100px);
 }
 
-tt-siderbar {
-  flex: 0 0 300px; /* Фиксированная ширина сайдбара */
+tt-sidebar {
+  flex: 0 0 300px;
   position: sticky;
   top: 0;
+  height: calc(100vh + 100px);
 }
 
 .main {
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
 }

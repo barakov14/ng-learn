@@ -4,7 +4,7 @@
     <div>
       <h3 class="h6 mb16">Навыки</h3>
       <div class="stack-wrapper mb32">
-        @for (stack of profile.stack; track stack) {
+        @for (stack of profile.stack; track $index) {
           <div class="skill-tag">{{ stack }}</div>
         } @empty {
           <p class="subtitle">Нету навыков</p>

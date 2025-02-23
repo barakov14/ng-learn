@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
-import { ProfileService } from '@tt/profile/data-access';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { profileActions, selectProfiles } from '@tt/profile/data-access';
 import { ProfileCardComponent } from '@tt/profile/feature-profile-search';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
-import { lastValueFrom } from 'rxjs';
-import { Profile } from '@tt/common/data-access';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'tt-profiles-search',
@@ -12,33 +11,14 @@ import { Profile } from '@tt/common/data-access';
   styleUrl: './profiles-search.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilesSearchComponent implements OnInit {
-  private readonly profileService = inject(ProfileService);
+export class ProfilesSearchComponent {
+  private readonly store = inject(Store);
 
-  protected readonly profiles = signal<Profile[]>([]);
-
-  ngOnInit() {
-    this.fetchProfiles({});
-  }
+  protected readonly profiles = this.store.selectSignal(selectProfiles);
 
   onSearchProfiles(
-    filters: Partial<{
-      firstName: string | null;
-      lastName: string | null;
-      stack: string | null;
-    }>,
+    filters: Partial<{ firstName: string | null; lastName: string | null; stack: string | null }>,
   ) {
-    this.fetchProfiles(filters);
-  }
-
-  async fetchProfiles(
-    filters: Partial<{
-      firstName: string | null;
-      lastName: string | null;
-      stack: string | null;
-    }>,
-  ) {
-    const resData = await lastValueFrom(this.profileService.getAccounts(filters));
-    this.profiles.set(resData.items);
+    this.store.dispatch(profileActions.fetchGetAccounts({ filters }));
   }
 }

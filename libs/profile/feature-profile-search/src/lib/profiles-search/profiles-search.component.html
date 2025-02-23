@@ -1,7 +1,7 @@
 <tt-profile-filters (search)="onSearchProfiles($event)" />
 
 <div class="profile-card__wrapper">
-  @for (profile of profiles(); track profile.id) {
+  @for (profile of profiles()?.items; track profile.id) {
     <tt-profile-card [profile]="profile" />
   }
 </div>

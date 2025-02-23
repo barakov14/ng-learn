@@ -21,7 +21,7 @@ export class PostsDataService {
     return this.http.post<PostComment>('/comment/', payload);
   }
 
-  getPostById(id: number) {
+  /*getPostById(id: number) {
     return this.http.get<Post>(`/post/${id}`);
-  }
+  }*/
 }

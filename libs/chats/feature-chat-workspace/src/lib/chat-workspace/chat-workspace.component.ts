@@ -50,11 +50,12 @@ export class ChatWorkspaceComponent {
     ),
   );
 
-  async onSendMessage(message: string) {
-    const resData = await lastValueFrom(this.chatsService.sendMessage(this.chatId(), message));
-    this.messages.update((messages) => [
+  onSendMessage(message: string) {
+    this.chatsService.wsAdapter.sendMessage(message, this.chatId());
+    // const resData = await lastValueFrom(this.chatsService.sendMessage(this.chatId(), message));
+    /*this.messages.update((messages) => [
       ...messages,
       { ...resData, user: this.currentUser()!, isMine: true },
-    ]);
+    ]);*/
   }
 }

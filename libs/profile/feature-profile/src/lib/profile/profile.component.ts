@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ProfileService } from '@tt/profile/data-access';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { lastValueFrom, map, switchMap } from 'rxjs';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { map, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ProfileHeaderComponent } from '@tt/profile/ui';
 import { ImageUrlPipe } from '@tt/common/utils';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { PostFeedComponent } from '@tt/posts/feature-posts';
 import { AuthService } from '@tt/auth/data-access';
+import { Store } from '@ngrx/store';
+import { selectCurrentUser, selectProfile, profileActions } from '@tt/profile/data-access';
 
 @Component({
   selector: 'tt-profile',
@@ -19,22 +21,28 @@ import { AuthService } from '@tt/auth/data-access';
 export class ProfileComponent {
   private readonly profileService = inject(ProfileService);
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  protected readonly currentUser = inject(AuthService).currentUser;
+  private readonly store = inject(Store);
+  protected readonly currentUser = this.store.selectSignal(selectCurrentUser);
 
   protected readonly subscribers$ = toSignal(this.profileService.getSubscribersShortList(5));
 
   protected readonly profile = toSignal(
     this.route.params.pipe(
-      map((param): string => param['id']),
+      map((param) => param['id']),
+      tap((id) =>
+        this.store.dispatch(
+          id === 'me'
+            ? profileActions.fetchGetMe()
+            : profileActions.fetchGetAccount({ id: Number(id) }),
+        ),
+      ),
       switchMap((id) =>
-        id === 'me' ? this.profileService.getMe() : this.profileService.getAccount(id),
+        this.store.select(id === 'me' ? selectCurrentUser : selectProfile(Number(id))),
       ),
     ),
   );
 
-  async sendMessage(userId: number) {
-    const res = await lastValueFrom(this.profileService.createChat(userId));
-    this.router.navigate(['/chats', res.id]);
+  sendMessage(userId: number) {
+    this.store.dispatch(profileActions.fetchCreateChat({ userId }));
   }
 }

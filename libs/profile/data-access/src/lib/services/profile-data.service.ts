@@ -5,9 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Profile } from '@tt/common/data-access';
 import { Chat } from '@tt/chats/data-access';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProfileDataService {
   private readonly http = inject(HttpClient);
 
@@ -40,7 +38,7 @@ export class ProfileDataService {
       .pipe(map((res) => res.items.slice(0, subsAmount)));
   }
 
-  getAccount(id: string) {
+  getAccount(id: number) {
     return this.http.get<Profile>(`/account/${id}`);
   }
 
@@ -52,7 +50,7 @@ export class ProfileDataService {
     const data = new FormData();
     data.append('image', imageUrl);
 
-    return this.http.post('/account/upload_image', data);
+    return this.http.post<Profile>('/account/upload_image', data);
   }
 
   createChat(userId: number) {

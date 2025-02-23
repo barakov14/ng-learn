@@ -6,16 +6,11 @@ export const selectPostsFeature = createFeatureSelector<PostsState>('posts');
 export const selectPosts = (userId: number) =>
   createSelector(selectPostsFeature, (state: PostsState) => state.userPosts[userId]?.posts ?? []);
 
-export const selectCurrentUserId = createSelector(
-  selectPostsFeature,
-  (state: PostsState) => state.currentUserId,
-);
-
 export const selectPostsLoadingIndicator = createSelector(
   selectPostsFeature,
   (state: PostsState) => state.isLoading,
 );
-export const selectPostsErrors = createSelector(
+/*export const selectPostsErrors = createSelector(
   selectPostsFeature,
   (state: PostsState) => state.error,
-);
+);*/

@@ -5,7 +5,7 @@
 }
 
 @if(user) {
-  @for (post of feed(); track post.id) {
+  @for (post of feed(); track $index) {
     <tt-post [post]="post" (createComment)="onCreateComment(post.id, $event)" [currentUser]="user" [loadingIndicator]="loadingIndicator()"/>
   } @empty {
     <p class="empty">Нету постов</p>

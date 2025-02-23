@@ -4,9 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ProfileDataService } from './profile-data.service';
 import { Profile } from '@tt/common/data-access';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProfileService {
   private readonly profileDataService = inject(ProfileDataService);
 
@@ -32,7 +30,7 @@ export class ProfileService {
     return this.profileDataService.getSubscribersShortList(subsAmount);
   }
 
-  getAccount(id: string) {
+  getAccount(id: number) {
     return this.profileDataService.getAccount(id);
   }
 
