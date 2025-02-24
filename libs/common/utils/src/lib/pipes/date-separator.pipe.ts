@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'ttDateSeparator',
 })
 export class DateSeparatorPipe implements PipeTransform {
-  transform(value: Date): string {
+  transform(value: Date | string): string {
     if (!value) return '';
 
     const date = new Date(value);

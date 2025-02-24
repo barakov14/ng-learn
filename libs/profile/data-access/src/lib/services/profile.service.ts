@@ -6,11 +6,11 @@ import { Profile } from '@tt/common/data-access';
 
 @Injectable()
 export class ProfileService {
-  private readonly profileDataService = inject(ProfileDataService);
+  readonly #profileDataService = inject(ProfileDataService);
 
-  private _me = signal<Profile | null>(null);
+  #me = signal<Profile | null>(null);
 
-  me = computed(() => this._me()) ?? toSignal(this.getMe());
+  me = computed(() => this.#me()) ?? toSignal(this.getMe());
 
   getAccounts(
     filters: Partial<{
@@ -19,30 +19,30 @@ export class ProfileService {
       stack: string | null;
     }>,
   ) {
-    return this.profileDataService.getAccounts(filters);
+    return this.#profileDataService.getAccounts(filters);
   }
 
   getMe() {
-    return this.profileDataService.getMe().pipe(tap((res) => this._me.set(res)));
+    return this.#profileDataService.getMe().pipe(tap((res) => this.#me.set(res)));
   }
 
   getSubscribersShortList(subsAmount: number = 3) {
-    return this.profileDataService.getSubscribersShortList(subsAmount);
+    return this.#profileDataService.getSubscribersShortList(subsAmount);
   }
 
   getAccount(id: number) {
-    return this.profileDataService.getAccount(id);
+    return this.#profileDataService.getAccount(id);
   }
 
   patchProfile(data: Partial<Profile>) {
-    return this.profileDataService.patchProfile(data);
+    return this.#profileDataService.patchProfile(data);
   }
 
   uploadAvatar(imageUrl: File) {
-    return this.profileDataService.uploadAvatar(imageUrl);
+    return this.#profileDataService.uploadAvatar(imageUrl);
   }
 
   createChat(userId: number) {
-    return this.profileDataService.createChat(userId);
+    return this.#profileDataService.createChat(userId);
   }
 }

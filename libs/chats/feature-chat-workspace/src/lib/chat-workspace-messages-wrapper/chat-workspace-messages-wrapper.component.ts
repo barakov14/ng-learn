@@ -18,8 +18,8 @@ import { MessageInputComponent } from './message-input/message-input.component';
 import { delay, map, startWith, withLatestFrom } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { DateSeparatorPipe } from '@tt/common/utils';
-import { ChatsService, Message } from '@tt/chats/data-access';
-import { Profile } from '@tt/common/data-access';
+import { ChatsService } from '@tt/chats/data-access';
+import { ChatWithUser } from '../../../../data-access/src/lib/models/chats';
 
 @Component({
   selector: 'tt-chat-workspace-messages-wrapper',
@@ -29,35 +29,35 @@ import { Profile } from '@tt/common/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatWorkspaceMessagesWrapperComponent implements AfterViewInit {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly chatsService = inject(ChatsService);
-  private readonly injector = inject(Injector);
-  readonly messages = input.required<Array<Message & { user: Profile; isMine: boolean }>>();
+  readonly #destroyRef = inject(DestroyRef);
+  readonly #chatsService = inject(ChatsService);
+  readonly #injector = inject(Injector);
+  readonly chatWithUser = input.required<ChatWithUser>();
   readonly sent = output<string>();
   protected readonly messagesWrapper =
     viewChild.required<ElementRef<HTMLDivElement>>('messagesWrapper');
 
-  protected readonly grouppedMessage = computed(() =>
-    this.chatsService.getGroupedMessage(this.messages()),
+  protected readonly groupedMessage = computed(() =>
+    this.#chatsService.getGroupedMessage(this.chatWithUser()),
   );
 
-  private readonly chatId = inject(ActivatedRoute).params.pipe(map((param) => param['id']));
+  readonly #chatId = inject(ActivatedRoute).params.pipe(map((param) => param['id']));
 
   ngAfterViewInit() {
-    runInInjectionContext(this.injector, () => {
-      this.chatId
+    runInInjectionContext(this.#injector, () => {
+      this.#chatId
         .pipe(
-          withLatestFrom(toObservable(this.messages).pipe(startWith(undefined))),
+          withLatestFrom(toObservable(this.chatWithUser).pipe(startWith(undefined))),
           delay(300),
-          takeUntilDestroyed(this.destroyRef),
+          takeUntilDestroyed(this.#destroyRef),
         )
         .subscribe(() => {
-          this.scrollToBottom();
+          this.#scrollToBottom();
         });
     });
   }
 
-  private scrollToBottom(behavior: ScrollBehavior = 'instant', height?: number) {
+  #scrollToBottom(behavior: ScrollBehavior = 'instant', height?: number) {
     const messagesWrapper = this.messagesWrapper().nativeElement;
     messagesWrapper.scrollTo({
       top: messagesWrapper.scrollHeight,
@@ -67,6 +67,6 @@ export class ChatWorkspaceMessagesWrapperComponent implements AfterViewInit {
 
   onSendMessage(message: string) {
     this.sent.emit(message);
-    this.scrollToBottom('smooth');
+    this.#scrollToBottom('smooth');
   }
 }

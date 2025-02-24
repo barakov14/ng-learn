@@ -11,10 +11,4 @@ import { ChatsListComponent } from '../chats-list/chats-list.component';
   styleUrl: './chats.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatsComponent implements OnInit {
-  readonly #chatsService = inject(ChatsService);
-
-  ngOnInit() {
-    this.#chatsService.connectWs();
-  }
-}
+export class ChatsComponent {}

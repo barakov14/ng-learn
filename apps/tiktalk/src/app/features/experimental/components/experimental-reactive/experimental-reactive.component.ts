@@ -70,8 +70,8 @@ export const addressFormGroup = () => {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExperimentalReactiveComponent {
-  private readonly mockService = inject(MockService);
-  private readonly nameValidator = inject(NameValidator);
+  readonly #mockService = inject(MockService);
+  readonly #nameValidator = inject(NameValidator);
 
   features = signal<Checkbox[]>([]);
 
@@ -95,7 +95,7 @@ export class ExperimentalReactiveComponent {
     username: new FormControl<string>(
       '',
       [Validators.required],
-      [this.nameValidator.validate.bind(this.nameValidator)],
+      [this.#nameValidator.validate.bind(this.#nameValidator)],
     ),
 
     /*additional: new FormGroup({
@@ -120,7 +120,7 @@ export class ExperimentalReactiveComponent {
       reason: 'no reasons',
     };
 
-    this.mockService
+    this.#mockService
       .getAdditionals()
       .pipe(takeUntilDestroyed())
       .subscribe((features) => {

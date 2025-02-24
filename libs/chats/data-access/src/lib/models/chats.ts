@@ -1,39 +1,34 @@
-import { Message, Messages } from './message';
+import { Message } from './message';
 import { Profile } from '@tt/common/data-access';
 
-export type UserFrom = {
+export type Chat = {
   id: number;
-  username: string;
-  avatarUrl: string;
-  subscribersAmount: number;
-  firstName: string;
-  lastName: string;
-  isActive: boolean;
-  stack: string[];
-  city: string;
-  description: string;
+  userFirst: Profile;
+  userSecond: Profile;
+  messages: Message[];
+};
+
+export type ChatWithUser = {
+  id: number;
+  userFirst: Profile;
+  userSecond: Profile;
+  messages: Message[];
+  companion: Profile;
+};
+
+export type GroupedChat = {
+  id: number;
+  userFirst: Profile;
+  userSecond: Profile;
+  companion: Profile;
+  messages: Array<{ date: string; messages: Message[] }>;
 };
 
 export type Chats = {
   id: number;
-  userFrom: UserFrom;
-  message?: any;
-  createdAt?: any;
+  userFrom: Profile;
+  message: string;
+  createdAt: string;
   unreadMessages: number;
 };
-
-export type UserFirst = Profile;
-
-export type UserSecond = Profile;
-
-export type Chat = {
-  id: number;
-  userFirst: UserFirst;
-  userSecond: UserSecond;
-  messages: Message[];
-};
-
-export type GrouppedChat = {
-  date: Date;
-  messages: Messages;
-}[];
+export type CurrentUserChats = Chats[];

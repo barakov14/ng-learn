@@ -10,9 +10,9 @@ import { Profile } from '@tt/common/data-access';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly http = inject(HttpClient);
-  private readonly cookieService = inject(CookieService);
-  private readonly router = inject(Router);
+  readonly #http = inject(HttpClient);
+  readonly #cookieService = inject(CookieService);
+  readonly #router = inject(Router);
 
   token: string | null = null;
   refreshToken: string | null = null;
@@ -21,8 +21,8 @@ export class AuthService {
 
   get isAuthenticated() {
     if (!this.token) {
-      this.token = this.cookieService.get('token');
-      this.refreshToken = this.cookieService.get('refreshToken');
+      this.token = this.#cookieService.get('token');
+      this.refreshToken = this.#cookieService.get('refreshToken');
     }
     return !!this.token;
   }
@@ -32,20 +32,20 @@ export class AuthService {
     payload.set('username', requestBody.username);
     payload.set('password', requestBody.password);
 
-    return this.http.post<TokenResponse>('/auth/token', payload).pipe(
+    return this.#http.post<TokenResponse>('/auth/token', payload).pipe(
       tap((val) => {
         this.setToken(val);
-        this.router.navigate(['/']);
+        this.#router.navigate(['/']);
       }),
     );
   }
 
   getCurrentUser() {
-    return this.http.get<Profile>('/account/me').pipe(tap((res) => this.currentUser.set(res)));
+    return this.#http.get<Profile>('/account/me').pipe(tap((res) => this.currentUser.set(res)));
   }
 
   refreshTokenAndProceed() {
-    return this.http
+    return this.#http
       .post<TokenResponse>('/auth/refresh', {
         refresh_token: this.refreshToken,
       })
@@ -64,14 +64,14 @@ export class AuthService {
     this.token = token.access_token;
     this.refreshToken = token.refresh_token;
 
-    this.cookieService.set('token', token.access_token);
-    this.cookieService.set('refreshToken', token.refresh_token);
+    this.#cookieService.set('token', token.access_token);
+    this.#cookieService.set('refreshToken', token.refresh_token);
   }
 
   logout() {
-    this.cookieService.deleteAll();
+    this.#cookieService.deleteAll();
     this.token = null;
     this.refreshToken = null;
-    this.router.navigate(['/login']);
+    this.#router.navigate(['/login']);
   }
 }

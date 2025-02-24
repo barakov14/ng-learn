@@ -5,20 +5,20 @@ import { CommentCreateDto } from '../models/comment';
 
 @Injectable()
 export class PostsDataService {
-  private readonly http = inject(HttpClient);
+  readonly #http = inject(HttpClient);
 
   createPost(payload: PostsCreateDto) {
-    return this.http.post<Post>('/post/', payload);
+    return this.#http.post<Post>('/post/', payload);
   }
 
   fetchPosts(userId: number) {
     const params = new HttpParams().append('user_id', userId);
 
-    return this.http.get<Post[]>('/post/', { params });
+    return this.#http.get<Post[]>('/post/', { params });
   }
 
   createComment(payload: CommentCreateDto) {
-    return this.http.post<PostComment>('/comment/', payload);
+    return this.#http.post<PostComment>('/comment/', payload);
   }
 
   /*getPostById(id: number) {

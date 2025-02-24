@@ -12,13 +12,13 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilesSearchComponent {
-  private readonly store = inject(Store);
+  readonly #store = inject(Store);
 
-  protected readonly profiles = this.store.selectSignal(selectProfiles);
+  protected readonly profiles = this.#store.selectSignal(selectProfiles);
 
   onSearchProfiles(
     filters: Partial<{ firstName: string | null; lastName: string | null; stack: string | null }>,
   ) {
-    this.store.dispatch(profileActions.fetchGetAccounts({ filters }));
+    this.#store.dispatch(profileActions.fetchGetAccounts({ filters }));
   }
 }

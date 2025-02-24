@@ -27,8 +27,8 @@ import { Profile } from '@tt/common/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostInputComponent implements AfterViewInit {
-  private readonly r2 = inject(Renderer2);
-  private readonly destroyRef = inject(DestroyRef);
+  readonly #r2 = inject(Renderer2);
+  readonly #destroyRef = inject(DestroyRef);
   readonly profile = input.required<Profile>();
   readonly isCommentInput = input<boolean>(false);
   readonly postId = input<number>();
@@ -39,7 +39,7 @@ export class PostInputComponent implements AfterViewInit {
 
   protected readonly postText = new FormControl<string>('');
 
-  private readonly formResetHandler = effect(() => {
+  readonly #formResetHandler = effect(() => {
     const loadingIndicator = this.loadingIndicator();
 
     if (loadingIndicator === false) {
@@ -54,7 +54,7 @@ export class PostInputComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.postText.valueChanges
-      .pipe(startWith(undefined), takeUntilDestroyed(this.destroyRef))
+      .pipe(startWith(undefined), takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => {
         this.onTextAreaInput();
       });
@@ -63,8 +63,8 @@ export class PostInputComponent implements AfterViewInit {
   onTextAreaInput() {
     const textarea = this.postInputEl().nativeElement;
 
-    this.r2.setStyle(textarea, 'height', 'auto');
-    this.r2.setStyle(textarea, 'style', textarea.scrollHeight + 'px');
+    this.#r2.setStyle(textarea, 'height', 'auto');
+    this.#r2.setStyle(textarea, 'style', textarea.scrollHeight + 'px');
   }
 
   onCreate() {

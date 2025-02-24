@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SiderbarComponent } from '@tt/common/ui';
 import { ProfileService } from '@tt/profile/data-access';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { ChatsService } from '@tt/chats/data-access';
 
 @Component({
   selector: 'tt-layout',
@@ -12,8 +13,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  private readonly profileService = inject(ProfileService);
+  readonly #profileService = inject(ProfileService);
+  readonly #chatsService = inject(ChatsService);
+  protected readonly unreadMessagesCount = this.#chatsService.unreadMessagesCount;
 
-  protected readonly profiles = toSignal(this.profileService.getSubscribersShortList());
-  protected readonly currentUser = toSignal(this.profileService.getMe());
+  protected readonly profiles = toSignal(this.#profileService.getSubscribersShortList());
+  protected readonly currentUser = toSignal(this.#profileService.getMe());
 }

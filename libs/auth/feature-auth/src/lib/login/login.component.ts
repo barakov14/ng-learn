@@ -12,14 +12,14 @@ import { AuthService } from '@tt/auth/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  private readonly authService = inject(AuthService);
+  readonly #authService = inject(AuthService);
 
   protected readonly isLoading = signal<boolean>(false);
 
   async onLogin(data: LoginRequest) {
     this.isLoading.set(true);
 
-    await lastValueFrom(this.authService.login(data));
+    await lastValueFrom(this.#authService.login(data));
 
     this.isLoading.set(false);
   }

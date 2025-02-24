@@ -7,8 +7,11 @@ export type Message = {
   text: string;
   createdAt: string;
   isRead: boolean;
-  updatedAt: string;
+  updatedAt?: Date;
+  isMine: boolean;
+  user: Profile;
 };
+
 export type SendMessageResponse = {
   id: number;
   userFromId: number;
@@ -18,5 +21,3 @@ export type SendMessageResponse = {
   isRead: boolean;
   updatedAt: string;
 };
-
-export type Messages = Array<Message & { user: Profile; isMine: boolean }>;

@@ -19,30 +19,30 @@ import { selectCurrentUser, selectProfile, profileActions } from '@tt/profile/da
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-  private readonly profileService = inject(ProfileService);
-  private readonly route = inject(ActivatedRoute);
-  private readonly store = inject(Store);
-  protected readonly currentUser = this.store.selectSignal(selectCurrentUser);
+  readonly #profileService = inject(ProfileService);
+  readonly #route = inject(ActivatedRoute);
+  readonly #store = inject(Store);
+  protected readonly currentUser = this.#store.selectSignal(selectCurrentUser);
 
-  protected readonly subscribers$ = toSignal(this.profileService.getSubscribersShortList(5));
+  protected readonly subscribers$ = toSignal(this.#profileService.getSubscribersShortList(5));
 
   protected readonly profile = toSignal(
-    this.route.params.pipe(
+    this.#route.params.pipe(
       map((param) => param['id']),
       tap((id) =>
-        this.store.dispatch(
+        this.#store.dispatch(
           id === 'me'
             ? profileActions.fetchGetMe()
             : profileActions.fetchGetAccount({ id: Number(id) }),
         ),
       ),
       switchMap((id) =>
-        this.store.select(id === 'me' ? selectCurrentUser : selectProfile(Number(id))),
+        this.#store.select(id === 'me' ? selectCurrentUser : selectProfile(Number(id))),
       ),
     ),
   );
 
   sendMessage(userId: number) {
-    this.store.dispatch(profileActions.fetchCreateChat({ userId }));
+    this.#store.dispatch(profileActions.fetchCreateChat({ userId }));
   }
 }

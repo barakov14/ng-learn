@@ -8,6 +8,8 @@ import { profileFeature } from '../../../../libs/profile/data-access/src/lib/sto
 import { ProfileEffects } from '../../../../libs/profile/data-access/src/lib/store/profile.effects';
 import { ProfileDataService, ProfileService } from '@tt/profile/data-access';
 import { ChatsDataService, ChatsService } from '@tt/chats/data-access';
+import { inject, provideEnvironmentInitializer } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
 
 export const routes: Routes = [
   {
@@ -27,6 +29,11 @@ export const routes: Routes = [
       provideEffects(ProfileEffects),
       ProfileService,
       ProfileDataService,
+      ChatsDataService,
+      ChatsService,
+      provideEnvironmentInitializer(() => {
+        lastValueFrom(inject(ChatsService).connectWs());
+      }),
     ],
     children: [
       {
@@ -46,7 +53,6 @@ export const routes: Routes = [
       },
       {
         path: 'chats',
-        providers: [ChatsDataService, ChatsService],
         loadChildren: () =>
           import('../../../../libs/chats/chats.routes').then((r) => r.chatsRoutes),
       },

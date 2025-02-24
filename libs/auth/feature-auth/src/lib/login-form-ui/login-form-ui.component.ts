@@ -15,16 +15,19 @@ import { LoginRequest } from '@tt/auth/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormUiComponent {
-  private readonly fb = inject(NonNullableFormBuilder);
+  readonly #fb = inject(NonNullableFormBuilder);
   readonly isLoading = input.required<boolean>();
 
   readonly login = output<LoginRequest>();
 
   protected isPasswordVisible = false;
 
-  protected readonly loginForm = this.fb.group({
-    username: this.fb.control<string>('AdilkhanBrkv', Validators.required),
-    password: this.fb.control<string>('SELrGxeaN8', [Validators.required, Validators.minLength(6)]),
+  protected readonly loginForm = this.#fb.group({
+    username: this.#fb.control<string>('AdilkhanBrkv', Validators.required),
+    password: this.#fb.control<string>('SELrGxeaN8', [
+      Validators.required,
+      Validators.minLength(6),
+    ]),
   });
 
   onLogin() {

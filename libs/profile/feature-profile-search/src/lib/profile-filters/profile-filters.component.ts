@@ -20,8 +20,8 @@ import { selectProfileFilters } from '@tt/profile/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFiltersComponent implements OnInit {
-  private readonly store = inject(Store);
-  private readonly destroyRef = inject(DestroyRef);
+  readonly #store = inject(Store);
+  readonly #destroyRef = inject(DestroyRef);
   protected readonly searchForm = inject(NonNullableFormBuilder).group({
     firstName: new FormControl(''),
     lastName: new FormControl(''),
@@ -32,15 +32,15 @@ export class ProfileFiltersComponent implements OnInit {
 
   ngOnInit() {
     this.searchForm.patchValue({
-      ...this.store.selectSignal(selectProfileFilters)(),
+      ...this.#store.selectSignal(selectProfileFilters)(),
     });
 
     this.searchForm.valueChanges
       .pipe(
-        startWith(this.store.selectSignal(selectProfileFilters)()),
+        startWith(this.#store.selectSignal(selectProfileFilters)()),
         debounceTime(300),
         distinctUntilChanged(),
-        takeUntilDestroyed(this.destroyRef),
+        takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe((searchTerms) => {
         this.search.emit(searchTerms);

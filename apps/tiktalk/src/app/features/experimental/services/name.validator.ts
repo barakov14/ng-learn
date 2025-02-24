@@ -6,11 +6,10 @@ import { Profile } from '@tt/common/data-access';
 
 @Injectable({ providedIn: 'root' })
 export class NameValidator implements AsyncValidator {
-  private readonly http = inject(HttpClient);
+  readonly #http = inject(HttpClient);
 
   validate(control: AbstractControl): Observable<ValidationErrors | null> {
-    console.log(control);
-    return this.http.get<Profile[]>('/account/test_accounts').pipe(
+    return this.#http.get<Profile[]>('/account/test_accounts').pipe(
       map((users) => {
         return users.filter((u) => u.firstName === control.value).length > 0
           ? null

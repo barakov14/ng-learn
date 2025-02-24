@@ -7,7 +7,7 @@ import { Chat } from '@tt/chats/data-access';
 
 @Injectable()
 export class ProfileDataService {
-  private readonly http = inject(HttpClient);
+  readonly #http = inject(HttpClient);
 
   getAccounts(
     filters: Partial<{
@@ -25,35 +25,35 @@ export class ProfileDataService {
       }
     });
 
-    return this.http.get<Pageble<Profile>>('/account/accounts', { params });
+    return this.#http.get<Pageble<Profile>>('/account/accounts', { params });
   }
 
   getMe() {
-    return this.http.get<Profile>('/account/me');
+    return this.#http.get<Profile>('/account/me');
   }
 
   getSubscribersShortList(subsAmount: number) {
-    return this.http
+    return this.#http
       .get<Pageble<Profile>>('/account/subscribers/')
       .pipe(map((res) => res.items.slice(0, subsAmount)));
   }
 
   getAccount(id: number) {
-    return this.http.get<Profile>(`/account/${id}`);
+    return this.#http.get<Profile>(`/account/${id}`);
   }
 
   patchProfile(profile: Partial<Profile>) {
-    return this.http.patch('/account/me', profile);
+    return this.#http.patch('/account/me', profile);
   }
 
   uploadAvatar(imageUrl: File) {
     const data = new FormData();
     data.append('image', imageUrl);
 
-    return this.http.post<Profile>('/account/upload_image', data);
+    return this.#http.post<Profile>('/account/upload_image', data);
   }
 
   createChat(userId: number) {
-    return this.http.post<Chat>(`/chat/${userId}`, {});
+    return this.#http.post<Chat>(`/chat/${userId}`, {});
   }
 }

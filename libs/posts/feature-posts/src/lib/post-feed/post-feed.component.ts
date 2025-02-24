@@ -32,22 +32,22 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeedComponent implements OnInit {
-  private readonly hostEl = inject(ElementRef);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly r2 = inject(Renderer2);
-  private readonly store = inject(Store);
+  readonly #hostEl = inject(ElementRef);
+  readonly #destroyRef = inject(DestroyRef);
+  readonly #r2 = inject(Renderer2);
+  readonly #store = inject(Store);
   protected readonly currentUser = inject(AuthService).currentUser;
   readonly profile = input.required<Profile>();
-  protected readonly loadingIndicator = this.store.selectSignal(selectPostsLoadingIndicator);
+  protected readonly loadingIndicator = this.#store.selectSignal(selectPostsLoadingIndicator);
 
   private readonly getPosts = effect(() => {
     const profile = this.profile();
-    this.store.dispatch(postsActions.requestFetchPosts({ userId: profile.id }));
+    this.#store.dispatch(postsActions.requestFetchPosts({ userId: profile.id }));
   });
 
   protected readonly feed = computed(() => {
     const profile = this.profile();
-    return this.store.selectSignal(selectPosts(profile.id))();
+    return this.#store.selectSignal(selectPosts(profile.id))();
   });
 
   @HostBinding('class.has-overflow') get hasOverflow() {
@@ -56,22 +56,22 @@ export class PostFeedComponent implements OnInit {
 
   ngOnInit() {
     fromEvent(window, 'resize')
-      .pipe(startWith(undefined), debounceTime(300), takeUntilDestroyed(this.destroyRef))
+      .pipe(startWith(undefined), debounceTime(300), takeUntilDestroyed(this.#destroyRef))
       .subscribe(() => {
         this.resizeFeed();
       });
   }
 
   resizeFeed() {
-    const { top } = this.hostEl.nativeElement.getBoundingClientRect();
+    const { top } = this.#hostEl.nativeElement.getBoundingClientRect();
 
     const height = window.innerHeight - top;
 
-    this.r2.setStyle(this.hostEl.nativeElement, 'height', `${height}px`);
+    this.#r2.setStyle(this.#hostEl.nativeElement, 'height', `${height}px`);
   }
 
   onCreateComment(postId: number, text: string) {
-    this.store.dispatch(
+    this.#store.dispatch(
       postsActions.requestCreateComment({
         payload: {
           text,
@@ -83,7 +83,7 @@ export class PostFeedComponent implements OnInit {
   }
 
   onCreatePost(postText: string) {
-    this.store.dispatch(
+    this.#store.dispatch(
       postsActions.requestCreatePost({
         payload: {
           title: 'Angular is amazing',

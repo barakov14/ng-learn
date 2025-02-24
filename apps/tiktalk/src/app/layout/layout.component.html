@@ -2,7 +2,7 @@
 @let currentUserData = currentUser();
 
 @if(currentUserData && profilesData) {
-  <tt-sidebar [currentUser]="currentUserData" [profiles]="profilesData"/>
+  <tt-sidebar [currentUser]="currentUserData" [profiles]="profilesData" [unreadMessagesCount]="unreadMessagesCount()"/>
 
   <main class="main">
     <router-outlet />

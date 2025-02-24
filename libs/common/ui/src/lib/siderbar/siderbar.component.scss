@@ -21,9 +21,10 @@
   height: 100%;
 }
 
+
 .main-menu-list {
   display: grid;
-  grid-gap: 0.5rem;
+  grid-gap: 0.1rem;
   list-style: none;
 }
 
@@ -31,8 +32,11 @@
   flex: 1;
 }
 
+
 .svg-icon {
   color: var(--light-color);
+  width: 24px;
+  height: 24px;
 
   &:hover {
     color: var(--primary-color);
@@ -41,7 +45,7 @@
 
 .menu-item-active {
   .menu-item svg {
-    // color: var(--primary-color)
+     color: var(--primary-color)
   }
   color: var(--primary-color);
 }
@@ -111,4 +115,12 @@
   height: 3rem;
   object-fit: cover;
   border-radius: 50%;
+}
+
+.unread-count {
+  margin-left: 7rem;
+  padding: 0.4rem 1rem;
+  color: var(--dark-color);
+  font-weight: 800;
+  background: var(--primary-color);
 }

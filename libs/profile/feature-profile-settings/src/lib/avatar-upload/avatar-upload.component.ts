@@ -39,15 +39,15 @@ export class AvatarUploadComponent {
     this.isDragging.set(true);
 
     const file = event.dataTransfer?.files[0];
-    if (file) this.processFile(file);
+    if (file) this.#processFile(file);
   }
 
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) this.processFile(file);
+    if (file) this.#processFile(file);
   }
 
-  private processFile(file: File) {
+  #processFile(file: File) {
     if (!file.type.startsWith('image/')) return alert('Можно загружать только изображения!');
     if (file.size > 5 * 1024 * 1024) return alert('Файл слишком большой! Максимум 5MB.');
 

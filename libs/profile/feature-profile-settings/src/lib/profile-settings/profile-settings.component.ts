@@ -14,18 +14,18 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileSettingsComponent implements OnInit {
-  private readonly store = inject(Store);
-  private readonly fb = inject(NonNullableFormBuilder);
+  readonly #store = inject(Store);
+  readonly #fb = inject(NonNullableFormBuilder);
 
-  protected readonly profile = this.store.selectSignal(selectCurrentUser);
+  protected readonly profile = this.#store.selectSignal(selectCurrentUser);
 
-  private avatarUrl: File | null = null;
+  #avatarUrl: File | null = null;
 
   ngOnInit() {
-    this.store.dispatch(profileActions.fetchGetMe());
+    this.#store.dispatch(profileActions.fetchGetMe());
   }
 
-  form = this.fb.group({
+  form = this.#fb.group({
     firstName: ['', [Validators.required]],
     lastName: [''],
     username: [{ value: '', disabled: true }, [Validators.required]],
@@ -50,7 +50,7 @@ export class ProfileSettingsComponent implements OnInit {
 
     if (this.form.invalid) return;
 
-    this.store.dispatch(
+    this.#store.dispatch(
       profileActions.fetchPatchProfile({
         data: {
           ...this.form.value,
@@ -59,10 +59,10 @@ export class ProfileSettingsComponent implements OnInit {
       }),
     );
 
-    if (this.avatarUrl) {
-      this.store.dispatch(
+    if (this.#avatarUrl) {
+      this.#store.dispatch(
         profileActions.fetchUploadAvatar({
-          imageUrl: this.avatarUrl,
+          imageUrl: this.#avatarUrl,
         }),
       );
     }
@@ -83,6 +83,6 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   onAvatarUpload(file: File) {
-    this.avatarUrl = file;
+    this.#avatarUrl = file;
   }
 }

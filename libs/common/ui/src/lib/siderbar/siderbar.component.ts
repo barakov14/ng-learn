@@ -14,6 +14,7 @@ import { Profile } from '@tt/common/data-access';
 export class SiderbarComponent {
   readonly currentUser = input.required<Profile>();
   readonly profiles = input.required<Profile[]>();
+  readonly unreadMessagesCount = input<number>(0);
 
   protected readonly menuItems = [
     {
