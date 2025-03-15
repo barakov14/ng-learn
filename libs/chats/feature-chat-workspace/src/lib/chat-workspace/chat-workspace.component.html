@@ -1,6 +1,0 @@
-@if (activeChat(); as activeChat) {
-  <tt-chat-workspace-header [profile]="activeChat.companion" />
-  <div class="message-container">
-    <tt-chat-workspace-messages-wrapper [chatWithUser]="activeChat" (sent)="onSendMessage($event)" />
-  </div>
-}

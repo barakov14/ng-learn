@@ -1,0 +1,22 @@
+@let user = currentUser();
+
+@if (user && profile().id === currentUser()?.id) {
+  <tt-post-input
+    (created)="onCreatePost($event)"
+    [profile]="user"
+    [loadingIndicator]="loadingIndicator()"
+  />
+}
+
+@if (user) {
+  @for (post of feed(); track $index) {
+    <tt-post
+      [post]="post"
+      (createComment)="onCreateComment(post.id, $event)"
+      [currentUser]="user"
+      [loadingIndicator]="loadingIndicator()"
+    />
+  } @empty {
+    <p class="empty">Нету постов</p>
+  }
+}

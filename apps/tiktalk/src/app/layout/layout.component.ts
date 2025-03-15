@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SiderbarComponent } from '@tt/common/ui';
-import { ProfileService } from '@tt/profile/data-access';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { ChatsService } from '@tt/chats/data-access';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { SiderbarComponent } from '@tt/common';
+import { ChatsService } from '@tt/chats';
+import { ProfileService } from '@tt/profile';
 
 @Component({
   selector: 'tt-layout',

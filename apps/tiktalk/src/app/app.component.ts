@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoaderComponent } from '@tt/common/ui';
+import { LoaderComponent } from '@tt/common';
 
 @Component({
   selector: 'app-root',

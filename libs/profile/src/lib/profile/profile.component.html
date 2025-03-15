@@ -1,0 +1,48 @@
+@if (profile(); as profile) {
+  <header class="profile-page__header">
+    <tt-profile-header [profile]="profile" />
+
+    <!--    Проверка пользователя на то, что является ли данный профиль страницой текущего пользователя   -->
+
+    @if (profile.id === currentUser()?.id) {
+      <a class="btn to-setting-btn" routerLink="/settings">
+        <span>Редактировать</span>
+        <fast-svg name="settings-dark" />
+      </a>
+    } @else {
+      <button class="btn to-setting-btn" (click)="sendMessage(profile.id)">
+        <span>Написать</span> <fast-svg name="send-message" width="16px" />
+      </button>
+    }
+  </header>
+
+  <main class="profile-page__body">
+    <div>
+      <tt-post-feed [profile]="profile" />
+    </div>
+
+    <div>
+      <h3 class="h6 mb16">Подписчики</h3>
+      <div class="subscribers-wrapper mb32">
+        @for (subscriber of subscribers$(); track subscriber.id) {
+          <a class="subscriber-avatar-btn" [routerLink]="['/profile', subscriber.id]">
+            <img [src]="subscriber.avatarUrl | ttImageUrl" alt="" />
+          </a>
+        }
+        <a class="to-subscribers-search" [routerLink]="['/search']"> </a>
+      </div>
+      <h3 class="h6 mb16">Навыки</h3>
+      <div class="stack-wrapper mb32">
+        @for (stack of profile.stack; track $index) {
+          <div class="skill-tag">{{ stack }}</div>
+        } @empty {
+          <p class="subtitle">Нету навыков</p>
+        }
+      </div>
+      <h3 class="h6 mb16">О себе</h3>
+      <p class="description">
+        {{ !!profile.description ? profile.description : 'Нету описания' }}
+      </p>
+    </div>
+  </main>
+}

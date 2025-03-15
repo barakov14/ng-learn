@@ -1,20 +1,14 @@
 import { Routes } from '@angular/router';
-import { accessGuard } from '@tt/auth/data-access';
 import { provideState } from '@ngrx/store';
-import { PostsDataService, postsFeature } from '@tt/posts/data-access';
 import { provideEffects } from '@ngrx/effects';
-import { PostsEffects } from '@tt/posts/data-access';
-import { profileFeature } from '../../../../libs/profile/data-access/src/lib/store/profile.feature';
-import { ProfileEffects } from '../../../../libs/profile/data-access/src/lib/store/profile.effects';
-import { ProfileDataService, ProfileService } from '@tt/profile/data-access';
-import { ChatsDataService, ChatsService } from '@tt/chats/data-access';
-import { inject, provideEnvironmentInitializer } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { PostsDataService, PostsEffects, postsFeature } from '@tt/posts';
+import { accessGuard } from '@tt/auth';
+import { ProfileDataService, ProfileEffects, profileFeature, ProfileService } from '@tt/profile';
 
 export const routes: Routes = [
   {
     path: 'login',
-    loadComponent: () => import('@tt/auth/feature-auth').then((c) => c.LoginComponent),
+    loadComponent: () => import('@tt/auth').then((c) => c.LoginComponent),
   },
   {
     path: 'experimental',
@@ -29,32 +23,24 @@ export const routes: Routes = [
       provideEffects(ProfileEffects),
       ProfileService,
       ProfileDataService,
-      ChatsDataService,
-      ChatsService,
-      provideEnvironmentInitializer(() => {
-        lastValueFrom(inject(ChatsService).connectWs());
-      }),
     ],
     children: [
       {
         path: '',
-        loadComponent: () =>
-          import('@tt/profile/feature-profile-search').then((c) => c.ProfilesSearchComponent),
+        loadComponent: () => import('@tt/profile').then((c) => c.ProfilesSearchComponent),
       },
       {
         path: 'profile/:id',
-        loadComponent: () => import('@tt/profile/feature-profile').then((c) => c.ProfileComponent),
+        loadComponent: () => import('@tt/profile').then((c) => c.ProfileComponent),
         providers: [provideState(postsFeature), provideEffects(PostsEffects), PostsDataService],
       },
       {
         path: 'settings',
-        loadComponent: () =>
-          import('@tt/profile/feature-profile-settings').then((c) => c.ProfileSettingsComponent),
+        loadComponent: () => import('@tt/profile').then((c) => c.ProfileSettingsComponent),
       },
       {
         path: 'chats',
-        loadChildren: () =>
-          import('../../../../libs/chats/chats.routes').then((r) => r.chatsRoutes),
+        loadChildren: () => import('@tt/chats').then((r) => r.chatsRoutes),
       },
     ],
     canActivate: [accessGuard],

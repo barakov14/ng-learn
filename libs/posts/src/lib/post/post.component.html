@@ -1,0 +1,40 @@
+@if (post(); as post) {
+  <a [routerLink]="['/profile', post.author.id]">
+    <tt-avatar-circle [avatarUrl]="post.author.avatarUrl" class="size32" />
+  </a>
+
+  <main class="post-body">
+    <div class="post-header">
+      <strong class="post__author">
+        <a [routerLink]="['/profile', post.author.id]"
+          >{{ post.author.firstName }} {{ post.author.lastName }}</a
+        >
+        <span class="post-created-at">{{ post.createdAt | ttTimeAgo }}</span>
+      </strong>
+    </div>
+    <p class="medium-text">{{ post.content }}</p>
+
+    <div class="post-counters">
+      <span class="comment-amount">
+        <fast-svg name="comment" width="16" />
+        <span class="post-comments-count">{{ post.comments.length }}</span>
+      </span>
+    </div>
+
+    <div class="post__comment-wrapper">
+      @for (comment of post.comments; track comment.id) {
+        <tt-post-comment [comment]="comment" />
+      }
+    </div>
+
+    @if (currentUser(); as currentUser) {
+      <tt-post-input
+        [loadingIndicator]="loadingIndicator()"
+        [isCommentInput]="true"
+        [profile]="currentUser"
+        [postId]="post.id"
+        (created)="onCreatedComment($event)"
+      />
+    }
+  </main>
+}

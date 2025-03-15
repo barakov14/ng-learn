@@ -1,0 +1,22 @@
+@if (chat(); as chat) {
+  <tt-avatar-circle [avatarUrl]="chat.userFrom.avatarUrl" class="size32" />
+
+  <div class="last-message__wrapper">
+    <div class="chat-user medium-text">
+      {{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}
+    </div>
+    <div class="medium-text">{{ chat?.message ?? '...' }}</div>
+  </div>
+  @if (chat.createdAt) {
+    <div class="second-block">
+      <div>
+        {{ chat.createdAt | date: 'dd.mm.YY' }}
+      </div>
+      @if (chat.unreadMessages) {
+        <div class="unread-message">
+          {{ chat.unreadMessages }}
+        </div>
+      }
+    </div>
+  }
+}
