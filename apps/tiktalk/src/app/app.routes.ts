@@ -4,6 +4,10 @@ import { provideEffects } from '@ngrx/effects';
 import { PostsDataService, PostsEffects, postsFeature } from '@tt/posts';
 import { accessGuard } from '@tt/auth';
 import { ProfileDataService, ProfileEffects, profileFeature, ProfileService } from '@tt/profile';
+import { inject, provideEnvironmentInitializer } from '@angular/core';
+import { ChatsService } from '@tt/chats';
+import { retry } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export const routes: Routes = [
   {
@@ -23,6 +27,17 @@ export const routes: Routes = [
       provideEffects(ProfileEffects),
       ProfileService,
       ProfileDataService,
+      provideEnvironmentInitializer(() => {
+        const chatsService = inject(ChatsService);
+        chatsService
+          .connectWs()
+          .pipe(takeUntilDestroyed(), retry(3))
+          .subscribe({
+            error: (err: Error) => {
+              console.error(err.message);
+            },
+          });
+      }),
     ],
     children: [
       {

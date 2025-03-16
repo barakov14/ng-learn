@@ -38,22 +38,22 @@ export class ChatsService {
     }
 
     if (isNewMessage(message)) {
-      const chat = this.chat();
-      if (!chat) return;
+      if (message.data.author !== this.#currentUser()?.id) {
+        const updatedCounts = this.unreadMessagesCountByChatId().map((entry) =>
+          entry.chatId === message.data.chat_id
+            ? { chatId: entry.chatId, count: entry.count + 1 }
+            : entry,
+        );
 
-      const updatedCounts = this.unreadMessagesCountByChatId().map((entry) =>
-        entry.chatId === message.data.chat_id
-          ? { chatId: entry.chatId, count: entry.count + 1 }
-          : entry,
-      );
-
-      if (!updatedCounts.some((entry) => entry.chatId === message.data.chat_id)) {
-        updatedCounts.push({ chatId: message.data.chat_id, count: 1 });
+        if (!updatedCounts.some((entry) => entry.chatId === message.data.chat_id)) {
+          updatedCounts.push({ chatId: message.data.chat_id, count: 1 });
+        }
+        this.unreadMessagesCountByChatId.set(updatedCounts);
+        // this.unreadMessagesCount.update((count) => count + 1);
       }
 
-      this.unreadMessagesCountByChatId.set(updatedCounts);
-      this.unreadMessagesCount.update((count) => count + 1);
-
+      const chat = this.chat();
+      if (!chat) return;
       this.chat.set({
         ...chat,
         messages: [
@@ -71,6 +71,10 @@ export class ChatsService {
         ],
       });
     }
+  }
+
+  sendMessage(message: string, chatId: number) {
+    this.wsAdapter.sendMessage(message, chatId);
   }
 
   getMyChats() {

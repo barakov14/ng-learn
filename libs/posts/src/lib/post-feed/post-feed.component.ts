@@ -37,11 +37,6 @@ export class PostFeedComponent implements OnInit {
   readonly profile = input.required<Profile>();
   protected readonly loadingIndicator = this.#store.selectSignal(selectPostsLoadingIndicator);
 
-  private readonly getPosts = effect(() => {
-    const profile = this.profile();
-    this.#store.dispatch(postsActions.requestFetchPosts({ userId: profile.id }));
-  });
-
   protected readonly feed = computed(() => {
     const profile = this.profile();
     return this.#store.selectSignal(selectPosts(profile.id))();
@@ -49,6 +44,12 @@ export class PostFeedComponent implements OnInit {
 
   @HostBinding('class.has-overflow') get hasOverflow() {
     return this.feed().length >= 2;
+  }
+
+  constructor() {
+    effect(() => {
+      this.#store.dispatch(postsActions.requestFetchPosts({ userId: this.profile().id }));
+    });
   }
 
   ngOnInit() {

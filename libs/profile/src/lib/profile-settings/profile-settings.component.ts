@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
-import { selectCurrentUser } from '../data-access/store/profile.selectors';
 import { profileActions } from '../data-access/store/profile.actions';
 import { ProfileHeaderComponent } from '../ui/profile-header/profile-header.component';
+import { ProfileService } from '@tt/profile';
 
 @Component({
   selector: 'tt-profile-settings',
@@ -13,17 +13,25 @@ import { ProfileHeaderComponent } from '../ui/profile-header/profile-header.comp
   styleUrl: './profile-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileSettingsComponent implements OnInit {
+export class ProfileSettingsComponent {
   readonly #store = inject(Store);
   readonly #fb = inject(NonNullableFormBuilder);
 
-  protected readonly profile = this.#store.selectSignal(selectCurrentUser);
+  readonly #profileService = inject(ProfileService);
+
+  protected readonly profile = computed(() => {
+    const profile = this.#profileService.me();
+
+    if (profile) {
+      this.form.patchValue({
+        ...profile,
+        stack: this.mergeStack(profile.stack),
+      });
+    }
+    return profile;
+  });
 
   #avatarUrl: File | null = null;
-
-  ngOnInit() {
-    this.#store.dispatch(profileActions.fetchGetMe());
-  }
 
   form = this.#fb.group({
     firstName: ['', [Validators.required]],
@@ -32,17 +40,6 @@ export class ProfileSettingsComponent implements OnInit {
     description: [''],
     stack: [''],
   });
-
-  constructor() {
-    effect(() => {
-      // @ts-ignore
-      this.form.patchValue({
-        ...this.profile(),
-        // @ts-ignore
-        stack: this.mergeStack(this.profile()?.stack),
-      });
-    });
-  }
 
   onSave() {
     this.form.markAllAsTouched();
@@ -75,7 +72,7 @@ export class ProfileSettingsComponent implements OnInit {
     return stack.split(',');
   }
 
-  mergeStack(stack: string | null | []) {
+  mergeStack(stack: string | null | string[]) {
     if (!stack) return '';
     if (Array.isArray(stack)) return stack.join(',');
 

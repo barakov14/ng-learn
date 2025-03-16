@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { firstValueFrom, map, switchMap } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { map, switchMap, tap } from 'rxjs';
 import { ChatWorkspaceMessagesWrapperComponent } from './chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
 import { ChatWorkspaceHeaderComponent } from './chat-workspace-messages-wrapper/chat-workspace-header/chat-workspace-header.component';
 import { ChatsService } from '../data/services/chats.service';
@@ -16,22 +16,30 @@ import { ChatsService } from '../data/services/chats.service';
 export class ChatWorkspaceComponent implements OnInit {
   readonly #route = inject(ActivatedRoute);
   readonly #chatsService = inject(ChatsService);
-  // private readonly currentUser = inject(AuthService).currentUser;
+  readonly #destroyRef = inject(DestroyRef);
 
   readonly #chatId = this.#route.params.pipe(map((params) => Number(params['id'])));
   private readonly chatId = toSignal(this.#chatId);
 
-  protected readonly activeChat = computed(() => {
-    return this.#chatsService.chat();
-  });
-
   ngOnInit() {
-    firstValueFrom(
-      this.#chatId.pipe(switchMap((chatId) => this.#chatsService.getChatById(chatId))),
-    );
+    this.#chatId
+      .pipe(
+        tap((chatId) => {
+          this.#chatsService.unreadMessagesCountByChatId.update((unreadCount) =>
+            unreadCount.filter((value) => value.chatId !== chatId),
+          );
+        }),
+        switchMap((chatId) => this.#chatsService.getChatById(chatId)),
+        takeUntilDestroyed(this.#destroyRef),
+      )
+      .subscribe((chat) => {});
   }
 
+  protected readonly activeChat = this.#chatsService.chat;
+
   onSendMessage(message: string) {
-    this.#chatsService.wsAdapter.sendMessage(message, Number(this.chatId()));
+    const chatId = this.chatId();
+    if (!chatId) return;
+    this.#chatsService.sendMessage(message, chatId);
   }
 }

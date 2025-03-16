@@ -7,3 +7,6 @@ export function isUnreadMessage(message: ChatWsMessage): message is ChatWsUnread
 export function isNewMessage(message: ChatWsMessage): message is ChatWsNewMessage {
   return 'action' in message && message.action === 'message';
 }
+export function isTokenExpired(message: ChatWsMessage): message is ChatWsNewMessage {
+  return 'action' in message && message.status === 'error';
+}

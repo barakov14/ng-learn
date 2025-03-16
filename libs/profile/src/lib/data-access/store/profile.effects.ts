@@ -4,7 +4,7 @@ import { profileActions } from './profile.actions';
 import { Store } from '@ngrx/store';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/operators';
-import { selectCurrentUser, selectProfile } from './profile.selectors';
+import { selectProfile } from './profile.selectors';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 
@@ -26,18 +26,6 @@ export class ProfileEffects {
           ),
         ),
       ),
-    ),
-  );
-
-  fetchGetMe$ = createEffect(() =>
-    this.#actions$.pipe(
-      ofType(profileActions.fetchGetMe),
-      concatLatestFrom(() => this.#store.select(selectCurrentUser)),
-      switchMap(([_, currentUser]) =>
-        currentUser ? of(currentUser) : this.#profileService.getMe(),
-      ),
-      map((currentUser) => profileActions.getMeSuccess({ profile: currentUser })),
-      catchError((error) => of(profileActions.getMeFailure({ error: error.error.errors }))),
     ),
   );
 

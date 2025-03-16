@@ -11,6 +11,8 @@ export class ChatWsRxjsService implements ChatWsInterface {
   #socket: WebSocketSubject<ChatWsMessage> | null = null;
 
   connect(params: ChatConnectionWsParams) {
+    this.#socket?.unsubscribe();
+    this.#socket = null;
     if (!this.#socket) {
       this.#socket = webSocket({
         url: params.url,

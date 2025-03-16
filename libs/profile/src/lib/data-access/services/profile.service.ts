@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ProfileDataService } from './profile-data.service';
+import { ProfileDataService } from '../../../index';
 import { Profile } from '@tt/common';
 import { AuthService } from '@tt/auth';
 

@@ -18,5 +18,5 @@ export class LayoutComponent {
   protected readonly unreadMessagesCount = this.#chatsService.unreadMessagesCount;
 
   protected readonly profiles = toSignal(this.#profileService.getSubscribersShortList());
-  protected readonly currentUser = toSignal(this.#profileService.getMe());
+  protected readonly currentUser = this.#profileService.me;
 }

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs';
+import { map, of, switchMap, tap } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
 import { Store } from '@ngrx/store';
-import { selectCurrentUser, selectProfile } from '../data-access/store/profile.selectors';
+import { selectProfile } from '../data-access/store/profile.selectors';
 import { ProfileService } from '../data-access/services/profile.service';
 import { profileActions } from '../data-access/store/profile.actions';
 import { PostFeedComponent } from '@tt/posts';
@@ -22,22 +22,19 @@ export class ProfileComponent {
   readonly #profileService = inject(ProfileService);
   readonly #route = inject(ActivatedRoute);
   readonly #store = inject(Store);
-  protected readonly currentUser = this.#store.selectSignal(selectCurrentUser);
+
+  protected readonly currentUser = this.#profileService.me;
 
   protected readonly subscribers$ = toSignal(this.#profileService.getSubscribersShortList(5));
 
   protected readonly profile = toSignal(
     this.#route.params.pipe(
       map((param) => param['id']),
-      tap((id) =>
-        this.#store.dispatch(
-          id === 'me'
-            ? profileActions.fetchGetMe()
-            : profileActions.fetchGetAccount({ id: Number(id) }),
-        ),
-      ),
+      tap((id) => {
+        if (id !== 'me') this.#store.dispatch(profileActions.fetchGetAccount({ id: Number(id) }));
+      }),
       switchMap((id) =>
-        this.#store.select(id === 'me' ? selectCurrentUser : selectProfile(Number(id))),
+        id !== 'me' ? this.#store.select(selectProfile(Number(id))) : of(this.currentUser()),
       ),
     ),
   );

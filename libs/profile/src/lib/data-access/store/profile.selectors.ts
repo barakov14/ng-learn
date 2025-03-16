@@ -6,11 +6,6 @@ export const selectProfileFeature = createFeatureSelector<ProfileState>('profile
 export const selectProfile = (userId: number) =>
   createSelector(selectProfileFeature, (state: ProfileState) => state.profile[userId]);
 
-export const selectCurrentUser = createSelector(
-  selectProfileFeature,
-  (state: ProfileState) => state.currentUser,
-);
-
 export const selectProfiles = createSelector(
   selectProfileFeature,
   (state: ProfileState) => state.profiles,

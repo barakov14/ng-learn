@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { LoginRequest, TokenResponse } from '../models/auth';
@@ -37,6 +37,7 @@ export class AuthService {
         this.setToken(val);
         this.#router.navigate(['/']);
       }),
+      switchMap(() => this.getCurrentUser()),
     );
   }
 
@@ -69,7 +70,8 @@ export class AuthService {
   }
 
   logout() {
-    this.#cookieService.deleteAll();
+    this.#cookieService.delete('token');
+    this.#cookieService.delete('refreshToken');
     this.token = null;
     this.refreshToken = null;
     this.#router.navigate(['/login']);
