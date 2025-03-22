@@ -1,7 +1,24 @@
 <tt-profile-filters (search)="onSearchProfiles($event)" />
 
 <div class="profile-card__wrapper">
-  @for (profile of profiles()?.items; track profile.id) {
-    <tt-profile-card [profile]="profile" />
+  @if(isLoading(); as loading) {
+    <div class="loader">
+      <tt-loader [isLoading]="loading" class="no-overlay"/>
+    </div>
+  } @else {
+    @for (profile of profiles()?.items; track profile.id; let last = $last) {
+      <tt-profile-card [profile]="profile" />
+
+
+      @if(last) {
+        @defer (on viewport) {
+          <tt-infinite-scroll-trigger
+            (loaded)="onLoadMoreProfiles()"
+          />
+        } @placeholder {
+          <div></div>
+        }
+      }
+    }
   }
 </div>

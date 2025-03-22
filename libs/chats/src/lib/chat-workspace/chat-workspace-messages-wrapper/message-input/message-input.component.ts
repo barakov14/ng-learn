@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { FastSvgComponent } from '@push-based/ngx-fast-svg';
-import { AuthService } from '@tt/auth';
-import { AvatarCircleComponent } from '@tt/common';
+import { AuthService, AvatarCircleComponent } from '@tt/common';
 
 @Component({
   selector: 'tt-message-input',

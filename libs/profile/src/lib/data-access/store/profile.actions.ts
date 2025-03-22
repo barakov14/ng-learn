@@ -11,8 +11,10 @@ export const profileActions = createActionGroup({
         stack: string | null;
       }>;
     }>(),
-    getAccountsSuccess: props<{ accounts: Pageble<Profile> }>(),
+    getAccountsSuccess: props<{ accounts: Pageble<Profile>; merge?: boolean }>(),
     getAccountsFailure: props<{ error: string }>(),
+
+    profileAccountsPageChange: props<{ page?: number }>(),
 
     fetchGetMe: emptyProps(),
     getMeSuccess: props<{ profile: Profile }>(),

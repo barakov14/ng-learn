@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ProfileDataService } from '../../../index';
-import { Profile } from '@tt/common';
-import { AuthService } from '@tt/auth';
+import { AuthService, Profile } from '@tt/common';
 
 @Injectable()
 export class ProfileService {
@@ -16,8 +15,12 @@ export class ProfileService {
       lastName: string | null;
       stack: string | null;
     }>,
+    pageable: {
+      page: number;
+      size: number;
+    },
   ) {
-    return this.#profileDataService.getAccounts(filters);
+    return this.#profileDataService.getAccounts(filters, pageable);
   }
 
   getSubscribersShortList(subsAmount: number = 3) {

@@ -1,9 +1,9 @@
 import {
   ApplicationConfig,
   inject,
+  isDevMode,
   provideAppInitializer,
   provideZoneChangeDetection,
-  isDevMode,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -13,8 +13,8 @@ import { of } from 'rxjs';
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { authInterceptor, AuthService } from '@tt/auth';
-import { httpUrlInterceptor } from '@tt/common';
+import { authInterceptor } from '@tt/auth';
+import { AuthService, httpUrlInterceptor } from '@tt/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [

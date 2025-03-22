@@ -5,8 +5,8 @@ import { ChatWithUser, GroupedChat } from '../models/chats';
 import { ChatWsMessage } from '../models/chat-ws.interface';
 import { isNewMessage, isUnreadMessage } from '../utils/type-guards';
 import { ChatWsRxjsService } from './chat-ws-rxjs.service';
-import { AuthService } from '@tt/auth';
 import { Message } from '../models/message';
+import { AuthService } from '@tt/common';
 
 @Injectable({ providedIn: 'root' })
 export class ChatsService {

@@ -15,3 +15,16 @@ export const selectProfileFilters = createSelector(
   selectProfileFeature,
   (state: ProfileState) => state.filters,
 );
+
+export const selectProfileIsLoading = createSelector(
+  selectProfileFeature,
+  (state: ProfileState) => state.isLoading,
+);
+
+export const selectProfilePageable = createSelector(
+  selectProfileFeature,
+  (state: ProfileState) => ({
+    page: state.page,
+    size: state.size,
+  }),
+);

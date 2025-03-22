@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { LoginRequest } from '../../data/models/auth';
+import { LoginRequest } from '@tt/common';
 
 @Component({
   selector: 'tt-login-form-ui',

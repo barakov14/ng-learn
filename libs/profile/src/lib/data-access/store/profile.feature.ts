@@ -13,7 +13,10 @@ export type ProfileState = {
     stack: string | null;
   }>;
   isLoading: boolean;
+  page: number;
+  size: number;
   error: string | null;
+  totalPages: number;
 };
 
 export const profileInitialState: ProfileState = {
@@ -24,6 +27,9 @@ export const profileInitialState: ProfileState = {
   filters: {},
   isLoading: false,
   error: null,
+  page: 1,
+  size: 10,
+  totalPages: 0,
 };
 
 export const profileFeature = createFeature({
@@ -35,12 +41,16 @@ export const profileFeature = createFeature({
       isLoading: true,
       error: null,
       filters,
+      page: 1,
     })),
-    on(profileActions.getAccountsSuccess, (state, { accounts }) => ({
+    on(profileActions.getAccountsSuccess, (state, { accounts, merge }) => ({
       ...state,
       isLoading: false,
-      error: null,
-      profiles: accounts,
+      profiles: {
+        ...accounts,
+        items: merge ? (state.profiles?.items ?? []).concat(accounts.items) : accounts.items,
+      },
+      totalPages: accounts.pages,
     })),
     on(profileActions.getAccountFailure, (state, { error }) => ({
       ...state,
@@ -143,5 +153,13 @@ export const profileFeature = createFeature({
       isLoading: false,
       error,
     })),
+
+    on(profileActions.profileAccountsPageChange, (state, { page }) => {
+      const newPage = page ?? (state.page < state.totalPages ? state.page + 1 : state.page);
+      return {
+        ...state,
+        page: newPage,
+      };
+    }),
   ),
 });

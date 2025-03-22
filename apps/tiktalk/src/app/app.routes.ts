@@ -6,8 +6,9 @@ import { accessGuard } from '@tt/auth';
 import { ProfileDataService, ProfileEffects, profileFeature, ProfileService } from '@tt/profile';
 import { inject, provideEnvironmentInitializer } from '@angular/core';
 import { ChatsService } from '@tt/chats';
-import { retry } from 'rxjs';
+import { catchError, retry, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuthService } from '@tt/common';
 
 export const routes: Routes = [
   {
@@ -29,12 +30,19 @@ export const routes: Routes = [
       ProfileDataService,
       provideEnvironmentInitializer(() => {
         const chatsService = inject(ChatsService);
+        const authService = inject(AuthService);
         chatsService
           .connectWs()
-          .pipe(takeUntilDestroyed(), retry(3))
+          .pipe(
+            retry(3),
+            catchError(() =>
+              authService.refreshTokenAndProceed().pipe(switchMap(() => chatsService.connectWs())),
+            ),
+            takeUntilDestroyed(),
+          )
           .subscribe({
             error: (err: Error) => {
-              console.error(err.message);
+              console.error(`WebSocket permanently failed: ${err.message}`);
             },
           });
       }),

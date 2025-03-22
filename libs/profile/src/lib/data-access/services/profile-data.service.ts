@@ -13,6 +13,10 @@ export class ProfileDataService {
       lastName: string | null;
       stack: string | null;
     }>,
+    pageable: {
+      page: number;
+      size: number;
+    },
   ) {
     let params = new HttpParams();
 
@@ -22,6 +26,9 @@ export class ProfileDataService {
         params = params.set(key, value);
       }
     });
+
+    params = params.set('page', pageable.page);
+    params = params.set('size', pageable.size);
 
     return this.#http.get<Pageble<Profile>>('/account/accounts', { params });
   }

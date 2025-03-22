@@ -4,7 +4,7 @@ import { profileActions } from './profile.actions';
 import { Store } from '@ngrx/store';
 import { catchError, map, of, switchMap, tap } from 'rxjs';
 import { concatLatestFrom } from '@ngrx/operators';
-import { selectProfile } from './profile.selectors';
+import { selectProfile, selectProfilePageable } from './profile.selectors';
 import { Router } from '@angular/router';
 import { ProfileService } from '../services/profile.service';
 
@@ -17,15 +17,22 @@ export class ProfileEffects {
 
   fetchGetAccounts$ = createEffect(() =>
     this.#actions$.pipe(
-      ofType(profileActions.fetchGetAccounts),
-      switchMap(({ filters }) =>
-        this.#profileService.getAccounts(filters).pipe(
-          map((profiles) => profileActions.getAccountsSuccess({ accounts: profiles })),
+      ofType(profileActions.fetchGetAccounts, profileActions.profileAccountsPageChange),
+      concatLatestFrom(() => this.#store.select(selectProfilePageable)),
+      switchMap(([action, pageable]) => {
+        const filters = 'filters' in action ? action.filters : {};
+        return this.#profileService.getAccounts(filters, pageable).pipe(
+          map((profiles) =>
+            profileActions.getAccountsSuccess({
+              accounts: profiles,
+              merge: !('filters' in action),
+            }),
+          ),
           catchError((error) =>
             of(profileActions.getAccountFailure({ error: error.error.errors })),
           ),
-        ),
-      ),
+        );
+      }),
     ),
   );
 

@@ -1,7 +1,10 @@
 import { httpUrlInterceptor } from './lib/data-access/interceptors/http-url.interceptor';
+import { LoginRequest } from './lib/data-access/models/auth';
 import { Pageble } from './lib/data-access/models/pageble.interface';
 import { Profile } from './lib/data-access/models/profile';
+import { AuthService } from './lib/data-access/services/auth.service';
 import { AvatarCircleComponent } from './lib/ui/avatar-circle/avatar-circle.component';
+import { InfiniteScrollTriggerComponent } from './lib/ui/infinite-scroll-trigger/infinite-scroll-trigger.component';
 import { LoaderComponent } from './lib/ui/loader/loader.component';
 import { SiderbarComponent } from './lib/ui/siderbar/siderbar.component';
 import { DateSeparatorPipe } from './lib/utils/pipes/date-separator.pipe';
@@ -20,4 +23,8 @@ export {
   AvatarCircleComponent,
   LoaderComponent,
   SiderbarComponent,
+  AuthService,
+  InfiniteScrollTriggerComponent,
 };
+
+export type { LoginRequest };

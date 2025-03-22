@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { AuthService } from '../data/services/auth.service';
-import { LoginRequest } from '../data/models/auth';
 import { LoginFormUiComponent } from '../ui/login-form-ui/login-form-ui.component';
+import { AuthService, LoginRequest } from '@tt/common';
 
 @Component({
   selector: 'tt-login',

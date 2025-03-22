@@ -16,10 +16,9 @@ import { debounceTime, fromEvent, startWith } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { PostInputComponent } from '../ui/post-input/post-input.component';
-import { AuthService } from '@tt/auth';
 import { selectPosts, selectPostsLoadingIndicator } from '../data-access/store/posts.selectors';
 import { postsActions } from '../data-access/store/posts.actions';
-import { Profile } from '@tt/common';
+import { AuthService, Profile } from '@tt/common';
 
 @Component({
   selector: 'tt-post-feed',

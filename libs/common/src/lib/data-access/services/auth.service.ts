@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, switchMap, tap, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { LoginRequest, TokenResponse } from '../models/auth';
 import { Profile } from '@tt/common';
+import { LoginRequest, TokenResponse } from '../models/auth';
 
 @Injectable({
   providedIn: 'root',
