@@ -1,14 +1,26 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormControl,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AvatarUploadComponent } from './avatar-upload/avatar-upload.component';
-import { profileActions } from '../data-access/store/profile.actions';
 import { ProfileHeaderComponent } from '../ui/profile-header/profile-header.component';
 import { ProfileService } from '@tt/profile';
+import { TtAddressInputComponent, TtInputTagComponent } from '@tt/common';
+import { profileActions } from '../data-access/store/profile.actions';
 
 @Component({
   selector: 'tt-profile-settings',
-  imports: [ProfileHeaderComponent, ReactiveFormsModule, AvatarUploadComponent],
+  imports: [
+    ProfileHeaderComponent,
+    ReactiveFormsModule,
+    AvatarUploadComponent,
+    TtInputTagComponent,
+    TtAddressInputComponent,
+  ],
   templateUrl: './profile-settings.component.html',
   styleUrl: './profile-settings.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +37,6 @@ export class ProfileSettingsComponent {
     if (profile) {
       this.form.patchValue({
         ...profile,
-        stack: this.mergeStack(profile.stack),
       });
     }
     return profile;
@@ -38,7 +49,8 @@ export class ProfileSettingsComponent {
     lastName: [''],
     username: [{ value: '', disabled: true }, [Validators.required]],
     description: [''],
-    stack: [''],
+    stack: new FormControl<string[]>([], { nonNullable: true }),
+    city: new FormControl<string>('', { nonNullable: true }),
   });
 
   onSave() {
@@ -70,13 +82,6 @@ export class ProfileSettingsComponent {
     if (Array.isArray(stack)) return stack;
 
     return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[]) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
   }
 
   onAvatarUpload(file: File) {

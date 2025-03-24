@@ -1,0 +1,1 @@
+export const DADATA_TOKEN = 'b52457ee46d4d5727ee6b0ac56712013482623d4';

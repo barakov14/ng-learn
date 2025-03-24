@@ -5,6 +5,13 @@
   padding: 24px;
 }
 
+.stack-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+
 .profile-form__wrapper {
   display: flex;
   flex-direction: column;

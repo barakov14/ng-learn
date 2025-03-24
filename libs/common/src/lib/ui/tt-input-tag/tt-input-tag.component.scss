@@ -1,0 +1,53 @@
+.tt-tag-input-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--light-color);
+  padding-bottom: 0.25rem;
+
+  &:focus-within {
+    border-bottom: 1px solid var(--primary-color);
+    transition: border-color 0.2s ease-in;
+  }
+}
+
+.tt-tag {
+  font-size: 14px;
+}
+
+.tag-text {
+  margin-right: 6px;
+}
+
+.tt-tags {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tt-input {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cancel {
+  border: none;
+  outline: none;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+fast-svg .fast-svg {
+  margin: 0;
+}
+
+.tt-tag {
+  display: flex;
+  align-items: center;
+}

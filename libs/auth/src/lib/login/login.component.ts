@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { lastValueFrom } from 'rxjs';
 import { LoginFormUiComponent } from '../ui/login-form-ui/login-form-ui.component';
 import { AuthService, LoginRequest } from '@tt/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'tt-login',
-  imports: [LoginFormUiComponent],
+  imports: [LoginFormUiComponent, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,4 +23,6 @@ export class LoginComponent {
 
     this.isLoading.set(false);
   }
+
+  stack = new FormControl<string[]>([]);
 }

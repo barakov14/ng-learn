@@ -1,0 +1,30 @@
+<label class="tt-form-label">
+  <span class="tt-form-label__text">
+    <ng-content />
+  </span>
+  <div class="tt-tag-input-wrapper">
+    <div
+      class="tt-tags"
+    >
+      @for(tag of tags(); track index; let index = $index) {
+        <div class="tt-tag skill-tag">
+          <button class="cancel" (click)="onRemoveTag(index)">
+            <fast-svg class="cancel-icon" name="x" width="20"/>
+          </button>
+          <span class="tag-text">{{ tag }}</span>
+        </div>
+      }
+    </div>
+    <input
+      type="text"
+      class="tt-input"
+      [ngModel]="value"
+      (ngModelChange)="onModelChange($event)"
+      (keydown.enter)="onAddTag($event)"
+      (keydown.backspace)="onRemoveLastTag($event)"
+      (keyup)="onKeyUp($event)"
+      (keydown)="onKeyDown($event)"
+      (blur)="onInputTouched()"
+    />
+  </div>
+</label>

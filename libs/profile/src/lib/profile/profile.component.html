@@ -40,8 +40,12 @@
         }
       </div>
       <h3 class="h6 mb16">О себе</h3>
-      <p class="description">
+      <p class="description mb32">
         {{ !!profile.description ? profile.description : 'Нету описания' }}
+      </p>
+      <h3 class="h6 mb16">Адрес</h3>
+      <p class="description">
+        {{ !!profile.city ? profile.city : 'Нету адреса' }}
       </p>
     </div>
   </main>

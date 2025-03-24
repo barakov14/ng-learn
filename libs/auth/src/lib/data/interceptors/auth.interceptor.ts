@@ -52,6 +52,10 @@ const handle403Error = (
 };
 
 const addToken = (req: HttpRequest<unknown>, token: string) => {
+  if (req.headers.get('Authorization')?.includes('Token')) {
+    return req;
+  }
+
   return req.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`,

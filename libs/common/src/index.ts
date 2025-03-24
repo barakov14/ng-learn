@@ -7,6 +7,9 @@ import { AvatarCircleComponent } from './lib/ui/avatar-circle/avatar-circle.comp
 import { InfiniteScrollTriggerComponent } from './lib/ui/infinite-scroll-trigger/infinite-scroll-trigger.component';
 import { LoaderComponent } from './lib/ui/loader/loader.component';
 import { SiderbarComponent } from './lib/ui/siderbar/siderbar.component';
+import { TtAddressInputComponent } from './lib/ui/tt-address-input/tt-address-input.component';
+import { TtInputTagComponent } from './lib/ui/tt-input-tag/tt-input-tag.component';
+import { TtInputComponent } from './lib/ui/tt-input/tt-input.component';
 import { DateSeparatorPipe } from './lib/utils/pipes/date-separator.pipe';
 import { ImageUrlPipe } from './lib/utils/pipes/image-url.pipe';
 import { SvgIconPipe } from './lib/utils/pipes/svg-icon.pipe';
@@ -25,6 +28,9 @@ export {
   SiderbarComponent,
   AuthService,
   InfiniteScrollTriggerComponent,
+  TtInputComponent,
+  TtInputTagComponent,
+  TtAddressInputComponent,
 };
 
 export type { LoginRequest };

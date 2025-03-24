@@ -5,11 +5,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { LoginRequest } from '@tt/common';
+import { LoginRequest, TtInputComponent } from '@tt/common';
 
 @Component({
   selector: 'tt-login-form-ui',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, TtInputComponent],
   templateUrl: './login-form-ui.component.html',
   styleUrl: './login-form-ui.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
